@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="dashboard_title">Laboratorios Edificio B</title>
+    <meta name="description" content="Smart Building Edge - Laboratorios Edificio B">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sabana:         #003D8F;
+            --sabana-mid:     #005EB8;
+            --sabana-light:   #C8DCF5;
+            --sabana-dim:     #EBF2FB;
+            --sabana-xdim:    #F5F9FE;
+
+            --bg:             #FFFFFF;
+            --bg-header:      rgba(255,255,255,0.94);
+            --bg-blueprint:   #F6F9FE;
+
+            --wall-outer:     #003D8F;
+            --wall-inner:     rgba(0,61,143,0.4);
+            --grid-line:      rgba(0,61,143,0.055);
+            --grid-major:     rgba(0,61,143,0.10);
+
+            --vacio:          #10B981;
+            --vacio-rgb:      16,185,129;
+            --vacio-fill:     rgba(16,185,129,0.07);
+            --vacio-stroke:   rgba(16,185,129,0.65);
+
+            --parcial:        #F59E0B;
+            --parcial-rgb:    245,158,11;
+            --parcial-fill:   rgba(245,158,11,0.07);
+            --parcial-stroke: rgba(245,158,11,0.65);
+
+            --ocupado:        #EF4444;
+            --ocupado-rgb:    239,68,68;
+            --ocupado-fill:   rgba(239,68,68,0.06);
+            --ocupado-stroke: rgba(239,68,68,0.55);
+
+            --unknown-fill:   rgba(0,61,143,0.025);
+            --unknown-stroke: rgba(0,61,143,0.18);
+
+            --text:           #091526;
+            --text-2:         #3A5780;
+            --text-3:         #8AA0C0;
+
+            --font:           'Outfit', sans-serif;
+            --mono:           'JetBrains Mono', monospace;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; overflow: hidden; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        header {
+            flex-shrink: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 2rem;
+            background: var(--bg-header);
+            border-bottom: 1.5px solid var(--sabana-light);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+        }
+
+        .header-left { display: flex; align-items: center; gap: 1rem; }
+
+        .logo-box {
+            width: 30px; height: 30px;
+            background: var(--sabana);
+            border-radius: 7px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .logo-box svg { width: 16px; height: 16px; fill: white; }
+
+        header h1 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--sabana);
+            letter-spacing: -0.01em;
+        }
+
+        .live-chip {
+            display: flex; align-items: center; gap: 0.38rem;
+            background: rgba(16,185,129,0.08);
+            border: 1px solid rgba(16,185,129,0.28);
+            border-radius: 20px;
+            padding: 0.2rem 0.6rem;
+        }
+
+        .live-dot {
+            width: 5px; height: 5px;
+            background: var(--vacio);
+            border-radius: 50%;
+            box-shadow: 0 0 5px var(--vacio);
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.35} }
+
+        .live-label {
+            font-size: 0.63rem; font-weight: 700;
+            letter-spacing: 0.12em; color: var(--vacio);
+            font-family: var(--mono);
+        }
+
+        .header-right { display: flex; align-items: center; gap: 0.65rem; }
+
+        .lang-selector {
+            display: flex;
+            background: var(--sabana-dim);
+            border: 1px solid var(--sabana-light);
+            border-radius: 7px; padding: 2px;
+        }
+
+        .lang-btn {
+            background: transparent; border: none;
+            color: var(--text-2);
+            padding: 0.27rem 0.55rem;
+            font-size: 0.7rem; font-weight: 700;
+            cursor: pointer; border-radius: 5px;
+            font-family: var(--mono); transition: all 0.18s;
+        }
+
+        .lang-btn.active { background: var(--sabana); color: #fff; }
+
+        .nav-btn {
+            background: var(--sabana-dim);
+            border: 1.5px solid var(--sabana-light);
+            color: var(--sabana);
+            padding: 0.35rem 0.85rem;
+            font-size: 0.78rem; font-weight: 600;
+            border-radius: 7px; text-decoration: none;
+            transition: all 0.18s; font-family: var(--font);
+        }
+
+        .nav-btn:hover { background: var(--sabana); color: #fff; border-color: var(--sabana); }
+
+        /* BLUEPRINT */
+        .blueprint-wrap {
+            flex: 1; display: flex; flex-direction: column;
+            background: var(--bg-blueprint);
+            background-image:
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+                linear-gradient(var(--grid-major) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-major) 1px, transparent 1px);
+            background-size: 20px 20px, 20px 20px, 100px 100px, 100px 100px;
+            position: relative; overflow: hidden;
+        }
+
+        .bp-label {
+            position: absolute; top: 1rem; left: 2rem;
+            display: flex; align-items: center; gap: 0.4rem; z-index: 10;
+        }
+
+        .bp-label-dot { width: 5px; height: 5px; background: var(--sabana); border-radius: 50%; }
+
+        .bp-label-text {
+            font-size: 0.65rem; font-weight: 700;
+            letter-spacing: 0.16em; color: var(--sabana);
+            font-family: var(--mono); text-transform: uppercase;
+        }
+
+        .floor-svg { width: 100%; height: 100%; display: block; }
+
+        /* SVG classes */
+        .room-group { cursor: crosshair; }
+
+        .bp-room {
+            transition: fill 0.5s ease, stroke 0.5s ease, filter 0.5s ease;
+            stroke-width: 1.5;
+        }
+
+        .bp-room.vacio   { fill:var(--vacio-fill);   stroke:var(--vacio-stroke);   filter:drop-shadow(0 0 8px rgba(var(--vacio-rgb),.18)); }
+        .bp-room.parcial { fill:var(--parcial-fill);  stroke:var(--parcial-stroke);  filter:drop-shadow(0 0 8px rgba(var(--parcial-rgb),.18)); }
+        .bp-room.ocupado { fill:var(--ocupado-fill);  stroke:var(--ocupado-stroke);  filter:drop-shadow(0 0 10px rgba(var(--ocupado-rgb),.2)); }
+        .bp-room.unknown { fill:var(--unknown-fill);  stroke:var(--unknown-stroke);  filter:none; }
+
+        .bp-pulse { fill:none; stroke-width:2; opacity:0; }
+        .bp-pulse.vacio   { stroke:var(--vacio); }
+        .bp-pulse.parcial { stroke:var(--parcial); }
+        .bp-pulse.ocupado { stroke:var(--ocupado); }
+
+        @keyframes room-pulse {
+            0%  { opacity:.7; transform-box:fill-box; transform-origin:center; transform:scale(1); }
+            100%{ opacity:0;  transform-box:fill-box; transform-origin:center; transform:scale(1.04); }
+        }
+        .bp-pulse.animate { animation: room-pulse 1.1s ease-out forwards; }
+
+        .wall-outer { stroke:var(--wall-outer); stroke-width:2.5; fill:none; }
+        .wall-inner { stroke:var(--wall-inner); stroke-width:1.5; fill:none; }
+        .util-fill  { fill:rgba(0,61,143,0.04); stroke:var(--wall-inner); stroke-width:1; }
+        .stair-line { stroke:rgba(0,61,143,0.2); stroke-width:0.75; fill:none; }
+        .corr-fill  { fill:rgba(0,61,143,0.02); stroke:var(--wall-inner); stroke-width:1; }
+        .door-arc   { stroke:var(--sabana-mid); stroke-width:0.85; fill:none; stroke-dasharray:3 2; }
+        .door-line  { stroke:var(--sabana-mid); stroke-width:0.85; fill:none; }
+
+        .t-room {
+            font-size:13px; font-weight:700; fill:var(--sabana);
+            pointer-events:none; text-anchor:middle; dominant-baseline:middle;
+            font-family:'Outfit',sans-serif;
+        }
+        .t-nick {
+            font-size:9px; font-weight:600; fill:var(--text-2);
+            pointer-events:none; text-anchor:middle; dominant-baseline:middle;
+            font-family:'Outfit',sans-serif; letter-spacing:.07em; text-transform:uppercase;
+        }
+        .t-dim {
+            font-size:7px; fill:var(--text-3);
+            pointer-events:none; text-anchor:middle; dominant-baseline:middle;
+            font-family:var(--mono); letter-spacing:.03em;
+        }
+        .t-corr {
+            font-size:7.5px; font-weight:700; fill:var(--text-3);
+            pointer-events:none; text-anchor:middle; dominant-baseline:middle;
+            font-family:var(--mono); letter-spacing:.18em; text-transform:uppercase;
+        }
+        .t-util {
+            font-size:7px; font-weight:600; fill:var(--text-3);
+            pointer-events:none; text-anchor:middle; dominant-baseline:middle;
+            font-family:var(--mono); letter-spacing:.1em;
+        }
+        .t-sensor {
+            font-size:6.5px; fill:var(--text-3);
+            pointer-events:none; text-anchor:start; dominant-baseline:middle;
+            font-family:var(--mono);
+        }
+        .t-entrance {
+            font-size:7px; font-weight:700; fill:var(--text-3);
+            pointer-events:none; text-anchor:middle; dominant-baseline:middle;
+            font-family:var(--mono); letter-spacing:.14em; text-transform:uppercase;
+        }
+
+        /* STATUS BAR */
+        .status-bar {
+            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0.5rem 2rem;
+            background: var(--bg-header);
+            border-top: 1.5px solid var(--sabana-light);
+            gap: 1rem;
+        }
+
+        .stats { display:flex; align-items:center; gap:1.25rem; }
+        .stat  { display:flex; align-items:center; gap:.4rem; }
+        .stat-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+        .stat-dot.vacio   { background:var(--vacio);   box-shadow:0 0 5px rgba(var(--vacio-rgb),.4); }
+        .stat-dot.parcial { background:var(--parcial);  box-shadow:0 0 5px rgba(var(--parcial-rgb),.4); }
+        .stat-dot.ocupado { background:var(--ocupado);  box-shadow:0 0 5px rgba(var(--ocupado-rgb),.4); }
+        .stat-lbl { font-size:.72rem; color:var(--text-2); font-weight:500; }
+        .stat-n   { font-size:.8rem;  font-weight:700; color:var(--sabana); font-family:var(--mono); }
+        .divider  { width:1px; height:14px; background:var(--sabana-light); }
+
+        .meta { display:flex; align-items:center; gap:1rem; }
+        .meta-item { display:flex; align-items:center; gap:.35rem; font-size:.65rem; font-family:var(--mono); color:var(--text-3); }
+        .meta-val  { color:var(--text-2); font-weight:500; }
+
+        /* HOVER CARD */
+        .hover-card {
+            position: fixed; z-index: 2000;
+            pointer-events: none;
+            opacity: 0; transform: scale(.94) translateY(6px);
+            transition: opacity .15s cubic-bezier(.4,0,.2,1), transform .15s cubic-bezier(.4,0,.2,1);
+            width: 268px;
+            background: #fff;
+            border: 1.5px solid var(--sabana-light);
+            border-radius: 13px;
+            padding: .95rem 1.1rem;
+            box-shadow: 0 14px 44px rgba(0,61,143,.12), 0 2px 8px rgba(0,0,0,.05);
+        }
+
+        .hover-card.visible { opacity:1; transform:scale(1) translateY(0); }
+
+        .hover-card.vacio   { border-color:rgba(var(--vacio-rgb),.4);   box-shadow:0 14px 44px rgba(0,61,143,.1), 0 0 18px rgba(var(--vacio-rgb),.12); }
+        .hover-card.parcial { border-color:rgba(var(--parcial-rgb),.4); box-shadow:0 14px 44px rgba(0,61,143,.1), 0 0 18px rgba(var(--parcial-rgb),.12); }
+        .hover-card.ocupado { border-color:rgba(var(--ocupado-rgb),.4); box-shadow:0 14px 44px rgba(0,61,143,.1), 0 0 20px rgba(var(--ocupado-rgb),.14); }
+
+        .card-top {
+            display:flex; justify-content:space-between; align-items:flex-start;
+            padding-bottom:.7rem; margin-bottom:.7rem;
+            border-bottom:1px solid var(--sabana-light);
+        }
+
+        .card-name { font-size:.95rem; font-weight:800; color:var(--sabana); }
+        .card-nick { font-size:.67rem; font-weight:600; color:var(--text-3); letter-spacing:.08em; text-transform:uppercase; margin-top:.12rem; font-family:var(--mono); }
+
+        .state-pill {
+            display:inline-flex; align-items:center; gap:.28rem;
+            padding:.2rem .55rem; border-radius:20px;
+            font-size:.64rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+            border:1.5px solid transparent; font-family:var(--mono); flex-shrink:0;
+        }
+
+        .pill-dot { width:4px; height:4px; border-radius:50%; flex-shrink:0; }
+
+        .state-pill.vacio   { background:rgba(var(--vacio-rgb),.1);   color:#0A7852; border-color:rgba(var(--vacio-rgb),.3); }
+        .state-pill.vacio .pill-dot   { background:var(--vacio); animation:blink 2s infinite; }
+        .state-pill.parcial { background:rgba(var(--parcial-rgb),.1); color:#92560A; border-color:rgba(var(--parcial-rgb),.3); }
+        .state-pill.parcial .pill-dot { background:var(--parcial); }
+        .state-pill.ocupado { background:rgba(var(--ocupado-rgb),.1); color:#991B1B; border-color:rgba(var(--ocupado-rgb),.3); }
+        .state-pill.ocupado .pill-dot { background:var(--ocupado); animation:blink 1.4s infinite; }
+        .state-pill.unknown { background:var(--sabana-dim); color:var(--text-3); border-color:var(--sabana-light); }
+        .state-pill.unknown .pill-dot { background:var(--text-3); }
+
+        .metrics { display:flex; flex-direction:column; gap:.52rem; margin-bottom:.7rem; }
+        .m-row   { display:flex; flex-direction:column; gap:.22rem; }
+        .m-head  { display:flex; justify-content:space-between; align-items:center; }
+        .m-lbl   { font-size:.68rem; color:var(--text-2); font-weight:500; display:flex; align-items:center; gap:.32rem; }
+        .m-tag   { font-size:.6rem; font-family:var(--mono); font-weight:600; padding:.08rem .32rem; border-radius:3px; background:var(--sabana-dim); color:var(--sabana-mid); border:1px solid var(--sabana-light); }
+        .m-val   { font-size:.76rem; font-weight:700; color:var(--sabana); font-family:var(--mono); }
+        .m-unit  { font-size:.6rem; color:var(--text-3); font-weight:400; }
+        .m-track { width:100%; height:3px; background:var(--sabana-light); border-radius:3px; overflow:hidden; }
+        .m-fill  { height:100%; border-radius:3px; transition:width .5s cubic-bezier(.4,0,.2,1); }
+        .co2-ok  { background:var(--vacio); }
+        .co2-mid { background:var(--parcial); }
+        .co2-hi  { background:var(--ocupado); }
+        .mq1-bar { background:var(--sabana-mid); }
+        .mq8-bar { background:#6366F1; }
+
+        .card-foot {
+            display:flex; align-items:center; justify-content:space-between;
+            padding-top:.6rem; border-top:1px solid var(--sabana-light);
+            font-size:.64rem; font-family:var(--mono); color:var(--text-3);
+        }
+        .foot-val { color:var(--text-2); font-weight:500; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-left">
+        <div class="logo-box">
+            <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+        </div>
+        <h1 data-translate="dashboard_title">Laboratorios Edificio B</h1>
+        <div class="live-chip">
+            <div class="live-dot"></div>
+            <span class="live-label">LIVE</span>
+        </div>
+    </div>
+    <div class="header-right">
+        <div class="lang-selector">
+            <button class="lang-btn active" data-lang="es" onclick="changeLang('es')" id="btn-lang-es">ES</button>
+            <button class="lang-btn"        data-lang="en" onclick="changeLang('en')" id="btn-lang-en">EN</button>
+        </div>
+        <a href="/history" class="nav-btn" id="nav-hist" data-translate="view_history">Ver Historial</a>
+    </div>
+</header>
+
+<div class="blueprint-wrap">
+    <div class="bp-label">
+        <div class="bp-label-dot"></div>
+        <span class="bp-label-text" data-translate="classrooms_title">Plano Interactivo</span>
+    </div>
+
+    <!-- viewBox: 1040 wide × 620 tall -->
+    <svg class="floor-svg" viewBox="0 0 1040 620" preserveAspectRatio="xMidYMid meet" id="floor-svg">
+
+        <!-- OUTER BOUNDARY -->
+        <rect class="wall-outer" x="60" y="30" width="920" height="555"/>
+
+        <!-- LEFT COLUMN: OFICINA + ENTRADA PRINCIPAL (top half, left side) -->
+        <!-- Oficina block occupies top-left -->
+        <rect class="util-fill" x="75" y="45" width="95" height="235"/>
+        <!-- Horizontal tread lines = office look -->
+        <line class="stair-line" x1="75"  y1="80"  x2="170" y2="80"/>
+        <line class="stair-line" x1="75"  y1="110" x2="170" y2="110"/>
+        <line class="stair-line" x1="75"  y1="140" x2="170" y2="140"/>
+        <line class="stair-line" x1="75"  y1="170" x2="170" y2="170"/>
+        <line class="stair-line" x1="75"  y1="200" x2="170" y2="200"/>
+        <line class="stair-line" x1="75"  y1="230" x2="170" y2="230"/>
+        <line class="stair-line" x1="75"  y1="260" x2="170" y2="260"/>
+        <text class="t-util" x="122" y="163">OFICINA</text>
+
+        <!-- ENTRADA PRINCIPAL — left lateral wall, mid-height of bottom block -->
+        <!-- Door gap in the outer left wall at y≈430 -->
+        <line class="door-line" x1="60"  y1="390" x2="60"  y2="470"/>
+        <!-- Outer wall breaks here — cover the gap with door arc swinging inward -->
+        <path class="door-arc" d="M 60,390 A 80,80 0 0,1 60,470"/>
+        <!-- Vertical label beside left wall -->
+        <text class="t-entrance" x="42" y="430" transform="rotate(-90,42,430)">ENTRADA PRINCIPAL</text>
+
+        <!-- CENTRAL CORRIDOR (horizontal) -->
+        <rect class="corr-fill" x="75"  y="290" width="890" height="65"/>
+        <text class="t-corr" x="520" y="322">PASILLO CENTRAL</text>
+
+        <!-- ============ LAB 1 — Automatización (top-left) ============ -->
+        <g class="room-group" data-lab="LAB1" id="group-LAB1">
+            <rect class="bp-pulse unknown" id="pulse-LAB1" x="170" y="45"  width="365" height="238"/>
+            <rect class="bp-room  unknown" id="room-LAB1"  x="170" y="45"  width="365" height="238"/>
+            <!-- desk rows -->
+            <line class="stair-line" x1="205" y1="110" x2="510" y2="110"/>
+            <line class="stair-line" x1="205" y1="148" x2="510" y2="148"/>
+            <line class="stair-line" x1="205" y1="186" x2="510" y2="186"/>
+            <line class="stair-line" x1="205" y1="224" x2="510" y2="224"/>
+            <!-- door bottom -->
+            <line class="door-line" x1="380" y1="275" x2="380" y2="283"/>
+            <path class="door-arc"  d="M 380,275 A 22,22 0 0,1 402,275"/>
+            <!-- sensor node -->
+            <circle cx="510" cy="58" r="4" fill="none" stroke="var(--sabana-mid)" stroke-width="1"/>
+            <circle cx="510" cy="58" r="2" fill="var(--sabana-mid)" opacity=".55"/>
+            <text class="t-sensor" x="520" y="62">SEN-01</text>
+            <!-- labels -->
+            <text class="t-room" id="text-LAB1" x="352" y="150" data-translate="lab_1">LAB 1</text>
+            <text class="t-nick" x="352" y="168" data-translate="lab_1_nick">Automatización</text>
+            <text class="t-dim"  x="352" y="183">12.5 m × 8.0 m</text>
+        </g>
+
+        <!-- ============ LAB 2 — Procesos (top-right) ============ -->
+        <g class="room-group" data-lab="LAB2" id="group-LAB2">
+            <rect class="bp-pulse unknown" id="pulse-LAB2" x="545" y="45"  width="420" height="238"/>
+            <rect class="bp-room  unknown" id="room-LAB2"  x="545" y="45"  width="420" height="238"/>
+            <line class="stair-line" x1="575" y1="110" x2="945" y2="110"/>
+            <line class="stair-line" x1="575" y1="148" x2="945" y2="148"/>
+            <line class="stair-line" x1="575" y1="186" x2="945" y2="186"/>
+            <line class="stair-line" x1="575" y1="224" x2="945" y2="224"/>
+            <line class="door-line" x1="645" y1="275" x2="645" y2="283"/>
+            <path class="door-arc"  d="M 645,275 A 22,22 0 0,0 623,275"/>
+            <circle cx="558" cy="58" r="4" fill="none" stroke="var(--sabana-mid)" stroke-width="1"/>
+            <circle cx="558" cy="58" r="2" fill="var(--sabana-mid)" opacity=".55"/>
+            <text class="t-sensor" x="568" y="62">SEN-02</text>
+            <text class="t-room" id="text-LAB2" x="755" y="150" data-translate="lab_2">LAB 2</text>
+            <text class="t-nick" x="755" y="168" data-translate="lab_2_nick">Procesos</text>
+            <text class="t-dim"  x="755" y="183">12.5 m × 8.0 m</text>
+        </g>
+
+        <!-- ============ LAB 3 — Lux (bottom-left, partial — left block is oficina) ============ -->
+        <g class="room-group" data-lab="LAB3" id="group-LAB3">
+            <rect class="bp-pulse unknown" id="pulse-LAB3" x="170" y="362" width="365" height="210"/>
+            <rect class="bp-room  unknown" id="room-LAB3"  x="170" y="362" width="365" height="210"/>
+            <line class="stair-line" x1="205" y1="415" x2="510" y2="415"/>
+            <line class="stair-line" x1="205" y1="450" x2="510" y2="450"/>
+            <line class="stair-line" x1="205" y1="485" x2="510" y2="485"/>
+            <line class="stair-line" x1="205" y1="520" x2="510" y2="520"/>
+            <line class="door-line" x1="380" y1="362" x2="380" y2="354"/>
+            <path class="door-arc"  d="M 380,362 A 22,22 0 0,0 358,362"/>
+            <circle cx="510" cy="375" r="4" fill="none" stroke="var(--sabana-mid)" stroke-width="1"/>
+            <circle cx="510" cy="375" r="2" fill="var(--sabana-mid)" opacity=".55"/>
+            <text class="t-sensor" x="520" y="379">SEN-03</text>
+            <text class="t-room" id="text-LAB3" x="352" y="462" data-translate="lab_3">LAB 3</text>
+            <text class="t-nick" x="352" y="480" data-translate="lab_3_nick">Lux</text>
+            <text class="t-dim"  x="352" y="495">12.5 m × 8.0 m</text>
+        </g>
+
+        <!-- ============ LAB 4 — Física (bottom-right) ============ -->
+        <g class="room-group" data-lab="LAB4" id="group-LAB4">
+            <rect class="bp-pulse unknown" id="pulse-LAB4" x="545" y="362" width="420" height="210"/>
+            <rect class="bp-room  unknown" id="room-LAB4"  x="545" y="362" width="420" height="210"/>
+            <line class="stair-line" x1="575" y1="415" x2="945" y2="415"/>
+            <line class="stair-line" x1="575" y1="450" x2="945" y2="450"/>
+            <line class="stair-line" x1="575" y1="485" x2="945" y2="485"/>
+            <line class="stair-line" x1="575" y1="520" x2="945" y2="520"/>
+            <line class="door-line" x1="645" y1="362" x2="645" y2="354"/>
+            <path class="door-arc"  d="M 645,362 A 22,22 0 0,1 667,362"/>
+            <circle cx="558" cy="375" r="4" fill="none" stroke="var(--sabana-mid)" stroke-width="1"/>
+            <circle cx="558" cy="375" r="2" fill="var(--sabana-mid)" opacity=".55"/>
+            <text class="t-sensor" x="568" y="379">SEN-04</text>
+            <text class="t-room" id="text-LAB4" x="755" y="462" data-translate="lab_4">LAB 4</text>
+            <text class="t-nick" x="755" y="480" data-translate="lab_4_nick">Física</text>
+            <text class="t-dim"  x="755" y="495">12.5 m × 8.0 m</text>
+        </g>
+
+        <!-- OFICINA lower block (below corridor, left) -->
+        <rect class="util-fill" x="75" y="362" width="88" height="210"/>
+        <text class="t-util" x="119" y="467">OFIC.</text>
+
+        <!-- Dividers -->
+        <line class="wall-inner" x1="535" y1="45"  x2="535" y2="283"/>
+        <line class="wall-inner" x1="535" y1="362" x2="535" y2="572"/>
+        <line class="wall-inner" x1="75"  y1="283" x2="980" y2="283"/>
+        <line class="wall-inner" x1="75"  y1="362" x2="980" y2="362"/>
+        <line class="wall-inner" x1="170" y1="45"  x2="170" y2="283"/>
+        <line class="wall-inner" x1="163" y1="362" x2="163" y2="572"/>
+
+        <!-- Scale bar -->
+        <line x1="80" y1="598" x2="180" y2="598" stroke="var(--sabana-light)" stroke-width="1.5"/>
+        <line x1="80"  y1="593" x2="80"  y2="603" stroke="var(--sabana-light)" stroke-width="1.5"/>
+        <line x1="180" y1="593" x2="180" y2="603" stroke="var(--sabana-light)" stroke-width="1.5"/>
+        <text class="t-dim" x="130" y="612">10 m</text>
+
+        <!-- North -->
+        <text x="960" y="48" font-size="7.5" font-family="JetBrains Mono,monospace" fill="var(--text-3)" text-anchor="middle">N</text>
+        <line x1="960" y1="52" x2="960" y2="68" stroke="var(--sabana-light)" stroke-width="1.5"/>
+        <polygon points="960,48 956,62 960,59 964,62" fill="var(--sabana)" opacity=".45"/>
+    </svg>
+</div>
+
+<!-- HOVER CARD -->
+<div class="hover-card unknown" id="hover-card">
+    <div class="card-top">
+        <div>
+            <div class="card-name" id="card-name">LAB</div>
+            <div class="card-nick" id="card-nick">–</div>
+        </div>
+        <div class="state-pill unknown" id="card-pill">
+            <div class="pill-dot"></div>
+            <span id="card-pill-txt" data-status-text="status_unknown">Sin Datos</span>
+        </div>
+    </div>
+    <div class="metrics">
+        <div class="m-row">
+            <div class="m-head">
+                <div class="m-lbl"><span class="m-tag">CO2</span><span data-translate="co2_index">CO₂ Index</span></div>
+                <div class="m-val"><span id="card-co2">0.0</span> <span class="m-unit">ppm</span></div>
+            </div>
+            <div class="m-track"><div class="m-fill co2-ok" id="bar-co2" style="width:0%"></div></div>
+        </div>
+        <div class="m-row">
+            <div class="m-head">
+                <div class="m-lbl"><span class="m-tag">MQ1</span><span data-translate="mq135">MQ135</span></div>
+                <div class="m-val"><span id="card-mq135">0</span> <span class="m-unit">ADC</span></div>
+            </div>
+            <div class="m-track"><div class="m-fill mq1-bar" id="bar-mq135" style="width:0%"></div></div>
+        </div>
+        <div class="m-row">
+            <div class="m-head">
+                <div class="m-lbl"><span class="m-tag">MQ8</span><span data-translate="mq8">MQ8</span></div>
+                <div class="m-val"><span id="card-mq8">0</span> <span class="m-unit">ADC</span></div>
+            </div>
+            <div class="m-track"><div class="m-fill mq8-bar" id="bar-mq8" style="width:0%"></div></div>
+        </div>
+    </div>
+    <div class="card-foot">
+        <span><span data-translate="last_updated">Actualizado</span>: <span class="foot-val" id="card-time">--:--:--</span></span>
+        <span>MQTT · ML</span>
+    </div>
+</div>
+
+<!-- STATUS BAR -->
+<div class="status-bar">
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-dot vacio"></div>
+            <span class="stat-lbl" data-translate="status_vacio">Vacío</span>
+            <span class="stat-n" id="cnt-vacio">0</span>
+        </div>
+        <div class="divider"></div>
+        <div class="stat">
+            <div class="stat-dot parcial"></div>
+            <span class="stat-lbl" data-translate="status_parcial">Parcial</span>
+            <span class="stat-n" id="cnt-parcial">0</span>
+        </div>
+        <div class="divider"></div>
+        <div class="stat">
+            <div class="stat-dot ocupado"></div>
+            <span class="stat-lbl" data-translate="status_ocupado">Ocupado</span>
+            <span class="stat-n" id="cnt-ocupado">0</span>
+        </div>
+    </div>
+    <div class="meta">
+        <div class="meta-item"><span>BROKER</span><span class="meta-val" id="meta-broker">MQTT</span></div>
+        <div class="divider"></div>
+        <div class="meta-item"><span>MODEL</span><span class="meta-val">RandomForest</span></div>
+        <div class="divider"></div>
+        <div class="meta-item"><span>UPTIME</span><span class="meta-val" id="meta-uptime">00:00:00</span></div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
+<script>
+    const LABS = ['LAB1','LAB2','LAB3','LAB4'];
+    const NICK_KEYS = { LAB1:'lab_1_nick', LAB2:'lab_2_nick', LAB3:'lab_3_nick', LAB4:'lab_4_nick' };
+    const NAME_KEYS = { LAB1:'lab_1', LAB2:'lab_2', LAB3:'lab_3', LAB4:'lab_4' };
+
+    const roomStates = {
+        LAB1:{estado:'UNKNOWN',co2:0,mq135:0,mq8:0,timestamp:'--:--:--'},
+        LAB2:{estado:'UNKNOWN',co2:0,mq135:0,mq8:0,timestamp:'--:--:--'},
+        LAB3:{estado:'UNKNOWN',co2:0,mq135:0,mq8:0,timestamp:'--:--:--'},
+        LAB4:{estado:'UNKNOWN',co2:0,mq135:0,mq8:0,timestamp:'--:--:--'}
+    };
+
+    let currentLang = localStorage.getItem('lang') || 'es';
+    let translations = {};
+
+    const t0 = Date.now();
+    setInterval(() => {
+        const s = Math.floor((Date.now()-t0)/1000);
+        const el = document.getElementById('meta-uptime');
+        if (el) el.textContent = [
+            String(Math.floor(s/3600)).padStart(2,'0'),
+            String(Math.floor((s%3600)/60)).padStart(2,'0'),
+            String(s%60).padStart(2,'0')
+        ].join(':');
+    }, 1000);
+
+    function changeLang(lang) {
+        applyTranslations(lang);
+        const hc = document.getElementById('hover-card');
+        if (hc.classList.contains('visible') && hc.dataset.currentLab) populateCard(hc.dataset.currentLab);
+    }
+
+    function applyTranslations(lang) {
+        currentLang = lang;
+        localStorage.setItem('lang', lang);
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+        document.querySelectorAll('[data-translate]').forEach(el => {
+            const k = el.getAttribute('data-translate');
+            if (translations[lang]?.[k]) el.textContent = translations[lang][k];
+        });
+        document.querySelectorAll('[data-status-text]').forEach(el => {
+            const k = el.getAttribute('data-status-text');
+            if (translations[lang]?.[k]) el.textContent = translations[lang][k];
+        });
+    }
+
+    function updateCounts() {
+        const c = {vacio:0,parcial:0,ocupado:0};
+        LABS.forEach(l => { const s = roomStates[l].estado.toLowerCase(); if (s in c) c[s]++; });
+        document.getElementById('cnt-vacio').textContent   = c.vacio;
+        document.getElementById('cnt-parcial').textContent = c.parcial;
+        document.getElementById('cnt-ocupado').textContent = c.ocupado;
+    }
+
+    function triggerPulse(lab, cls) {
+        const el = document.getElementById(`pulse-${lab}`);
+        if (!el) return;
+        el.className.baseVal = `bp-pulse ${cls}`;
+        el.classList.remove('animate');
+        void el.getBoundingClientRect();
+        el.classList.add('animate');
+    }
+
+    function updateRoom(lab, state, co2, mq135, mq8, timeStr) {
+        const cls = state.toLowerCase();
+        let t = timeStr;
+        if (!t) t = new Date().toTimeString().split(' ')[0];
+        else if (t.includes(' ')) t = t.split(' ')[1] || t;
+
+        roomStates[lab] = {estado:state, co2:parseFloat(co2)||0, mq135:parseInt(mq135)||0, mq8:parseInt(mq8)||0, timestamp:t};
+
+        const rm = document.getElementById(`room-${lab}`);
+        if (rm) rm.className.baseVal = `bp-room ${cls}`;
+        triggerPulse(lab, cls);
+
+        const hc = document.getElementById('hover-card');
+        if (hc.classList.contains('visible') && hc.dataset.currentLab === lab) populateCard(lab);
+        updateCounts();
+    }
+
+    function populateCard(lab) {
+        const d   = roomStates[lab];
+        const cls = d.estado.toLowerCase();
+        const hc  = document.getElementById('hover-card');
+
+        hc.className = `hover-card visible ${cls}`;
+        hc.dataset.currentLab = lab;
+
+        document.getElementById('card-name').textContent = translations[currentLang]?.[NAME_KEYS[lab]] ?? lab;
+        document.getElementById('card-nick').textContent = translations[currentLang]?.[NICK_KEYS[lab]] ?? '';
+
+        const pill = document.getElementById('card-pill');
+        pill.className = `state-pill ${cls}`;
+        const tk = `status_${cls}`;
+        pill.setAttribute('data-status-text', tk);
+        document.getElementById('card-pill-txt').textContent = translations[currentLang]?.[tk] ?? d.estado;
+
+        document.getElementById('card-co2').textContent   = d.co2.toFixed(1);
+        document.getElementById('card-mq135').textContent = d.mq135;
+        document.getElementById('card-mq8').textContent   = d.mq8;
+        document.getElementById('card-time').textContent  = d.timestamp;
+
+        const co2Bar = document.getElementById('bar-co2');
+        co2Bar.style.width = `${Math.min((d.co2/1500)*100, 100)}%`;
+        co2Bar.className = 'm-fill ' + (d.co2 < 600 ? 'co2-ok' : d.co2 < 1000 ? 'co2-mid' : 'co2-hi');
+        document.getElementById('bar-mq135').style.width = `${Math.min((d.mq135/4095)*100,100)}%`;
+        document.getElementById('bar-mq8').style.width   = `${Math.min((d.mq8/4095)*100,100)}%`;
+    }
+
+    const hc  = document.getElementById('hover-card');
+    const OFF = 18;
+
+    document.querySelectorAll('.room-group').forEach(g => {
+        const lab = g.getAttribute('data-lab');
+        g.addEventListener('mouseenter', () => { populateCard(lab); hc.classList.add('visible'); });
+        g.addEventListener('mousemove', e => {
+            let x = e.clientX + OFF, y = e.clientY + OFF;
+            if (x + hc.offsetWidth  > window.innerWidth  - 8) x = e.clientX - hc.offsetWidth  - OFF;
+            if (y + hc.offsetHeight > window.innerHeight - 8) y = e.clientY - hc.offsetHeight - OFF;
+            hc.style.left = `${x}px`;
+            hc.style.top  = `${y}px`;
+        });
+        g.addEventListener('mouseleave', () => { hc.classList.remove('visible'); hc.dataset.currentLab = ''; });
+    });
+
+    const socket = io();
+    socket.on('connect',    () => document.getElementById('meta-broker').textContent = 'MQTT · LIVE');
+    socket.on('disconnect', () => document.getElementById('meta-broker').textContent = 'MQTT · OFF');
+    socket.on('new_data', d => updateRoom(d.lab, d.estado, d.co2, d.mq135, d.mq8, null));
+
+    fetch('/translations')
+        .then(r => r.json())
+        .then(d => { translations = d; applyTranslations(currentLang); return fetch('/latest_readings'); })
+        .then(r => r.json())
+        .then(rd => { for (const [lab,v] of Object.entries(rd)) updateRoom(lab, v.estado, v.co2, v.mq135, v.mq8, v.timestamp); })
+        .catch(err => console.error('Init:', err));
+</script>
+</body>
+</html>

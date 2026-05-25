@@ -1,0 +1,744 @@
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:1
+load:0x3fff0030,len:4876
+ho 0 tail 12 room 4
+load:0x40078000,len:16560
+load:0x40080400,len:3500
+entry 0x400805b4
+
+============================================
+SISTEMA DE REGISTRO ACTIVO - MQ135
+Duración: 60 min | Muestreo: cada 10 seg
+============================================
+
+[00:09] Lectura: 3099 | Voltaje: 2.50V | Progreso: 0%
+[00:19] Lectura: 3035 | Voltaje: 2.45V | Progreso: 0%
+[00:29] Lectura: 2967 | Voltaje: 2.39V | Progreso: 0%
+[00:39] Lectura: 2913 | Voltaje: 2.35V | Progreso: 1%
+[00:49] Lectura: 2879 | Voltaje: 2.32V | Progreso: 1%
+[00:59] Lectura: 2935 | Voltaje: 2.37V | Progreso: 1%
+[01:09] Lectura: 2894 | Voltaje: 2.33V | Progreso: 1%
+[01:19] Lectura: 2845 | Voltaje: 2.29V | Progreso: 2%
+[01:29] Lectura: 2839 | Voltaje: 2.29V | Progreso: 2%
+[01:39] Lectura: 2816 | Voltaje: 2.27V | Progreso: 2%
+[01:49] Lectura: 2736 | Voltaje: 2.20V | Progreso: 3%
+[01:59] Lectura: 2739 | Voltaje: 2.21V | Progreso: 3%
+[02:09] Lectura: 2717 | Voltaje: 2.19V | Progreso: 3%
+[02:19] Lectura: 2720 | Voltaje: 2.19V | Progreso: 3%
+[02:29] Lectura: 2689 | Voltaje: 2.17V | Progreso: 4%
+[02:39] Lectura: 2660 | Voltaje: 2.14V | Progreso: 4%
+[02:49] Lectura: 2650 | Voltaje: 2.14V | Progreso: 4%
+[02:59] Lectura: 2637 | Voltaje: 2.13V | Progreso: 4%
+[03:09] Lectura: 2622 | Voltaje: 2.11V | Progreso: 5%
+[03:19] Lectura: 2610 | Voltaje: 2.10V | Progreso: 5%
+[03:29] Lectura: 2586 | Voltaje: 2.08V | Progreso: 5%
+[03:39] Lectura: 2597 | Voltaje: 2.09V | Progreso: 6%
+[03:49] Lectura: 2559 | Voltaje: 2.06V | Progreso: 6%
+[03:59] Lectura: 2557 | Voltaje: 2.06V | Progreso: 6%
+[04:09] Lectura: 2559 | Voltaje: 2.06V | Progreso: 6%
+[04:19] Lectura: 2543 | Voltaje: 2.05V | Progreso: 7%
+[04:29] Lectura: 2533 | Voltaje: 2.04V | Progreso: 7%
+[04:39] Lectura: 2517 | Voltaje: 2.03V | Progreso: 7%
+[04:49] Lectura: 2529 | Voltaje: 2.04V | Progreso: 8%
+[04:59] Lectura: 2499 | Voltaje: 2.01V | Progreso: 8%
+[05:09] Lectura: 2487 | Voltaje: 2.00V | Progreso: 8%
+[05:19] Lectura: 2481 | Voltaje: 2.00V | Progreso: 8%
+[05:29] Lectura: 2469 | Voltaje: 1.99V | Progreso: 9%
+[05:39] Lectura: 2469 | Voltaje: 1.99V | Progreso: 9%
+[05:49] Lectura: 2471 | Voltaje: 1.99V | Progreso: 9%
+[05:59] Lectura: 2464 | Voltaje: 1.99V | Progreso: 9%
+[06:09] Lectura: 2451 | Voltaje: 1.98V | Progreso: 10%
+[06:19] Lectura: 2448 | Voltaje: 1.97V | Progreso: 10%
+[06:29] Lectura: 2448 | Voltaje: 1.97V | Progreso: 10%
+[06:39] Lectura: 2448 | Voltaje: 1.97V | Progreso: 11%
+[06:49] Lectura: 2412 | Voltaje: 1.94V | Progreso: 11%
+[06:59] Lectura: 2426 | Voltaje: 1.96V | Progreso: 11%
+[07:09] Lectura: 2411 | Voltaje: 1.94V | Progreso: 11%
+[07:19] Lectura: 2413 | Voltaje: 1.94V | Progreso: 12%
+[07:29] Lectura: 2403 | Voltaje: 1.94V | Progreso: 12%
+[07:39] Lectura: 2410 | Voltaje: 1.94V | Progreso: 12%
+[07:49] Lectura: 2397 | Voltaje: 1.93V | Progreso: 13%
+[07:59] Lectura: 2397 | Voltaje: 1.93V | Progreso: 13%
+[08:09] Lectura: 2390 | Voltaje: 1.93V | Progreso: 13%
+[08:19] Lectura: 2382 | Voltaje: 1.92V | Progreso: 13%
+[08:29] Lectura: 2365 | Voltaje: 1.91V | Progreso: 14%
+[08:39] Lectura: 2357 | Voltaje: 1.90V | Progreso: 14%
+[08:49] Lectura: 2373 | Voltaje: 1.91V | Progreso: 14%
+[08:59] Lectura: 2365 | Voltaje: 1.91V | Progreso: 14%
+[09:09] Lectura: 2352 | Voltaje: 1.90V | Progreso: 15%
+[09:19] Lectura: 2351 | Voltaje: 1.89V | Progreso: 15%
+[09:29] Lectura: 2342 | Voltaje: 1.89V | Progreso: 15%
+[09:39] Lectura: 2352 | Voltaje: 1.90V | Progreso: 16%
+[09:49] Lectura: 2329 | Voltaje: 1.88V | Progreso: 16%
+[09:59] Lectura: 2327 | Voltaje: 1.88V | Progreso: 16%
+[10:09] Lectura: 2352 | Voltaje: 1.90V | Progreso: 16%
+[10:19] Lectura: 2327 | Voltaje: 1.88V | Progreso: 17%
+[10:29] Lectura: 2320 | Voltaje: 1.87V | Progreso: 17%
+[10:39] Lectura: 2329 | Voltaje: 1.88V | Progreso: 17%
+[10:49] Lectura: 2319 | Voltaje: 1.87V | Progreso: 18%
+[10:59] Lectura: 2305 | Voltaje: 1.86V | Progreso: 18%
+[11:09] Lectura: 2299 | Voltaje: 1.85V | Progreso: 18%
+[11:19] Lectura: 2303 | Voltaje: 1.86V | Progreso: 18%
+[11:29] Lectura: 2295 | Voltaje: 1.85V | Progreso: 19%
+[11:39] Lectura: 2302 | Voltaje: 1.86V | Progreso: 19%
+[11:49] Lectura: 2301 | Voltaje: 1.85V | Progreso: 19%
+[11:59] Lectura: 2306 | Voltaje: 1.86V | Progreso: 19%
+[12:09] Lectura: 2304 | Voltaje: 1.86V | Progreso: 20%
+[12:19] Lectura: 2318 | Voltaje: 1.87V | Progreso: 20%
+[12:29] Lectura: 2303 | Voltaje: 1.86V | Progreso: 20%
+[12:39] Lectura: 2306 | Voltaje: 1.86V | Progreso: 21%
+[12:49] Lectura: 2319 | Voltaje: 1.87V | Progreso: 21%
+[12:59] Lectura: 2302 | Voltaje: 1.86V | Progreso: 21%
+[13:09] Lectura: 2286 | Voltaje: 1.84V | Progreso: 21%
+[13:19] Lectura: 2290 | Voltaje: 1.85V | Progreso: 22%
+[13:29] Lectura: 2302 | Voltaje: 1.86V | Progreso: 22%
+[13:39] Lectura: 2272 | Voltaje: 1.83V | Progreso: 22%
+[13:49] Lectura: 2273 | Voltaje: 1.83V | Progreso: 23%
+[13:59] Lectura: 2279 | Voltaje: 1.84V | Progreso: 23%
+[14:09] Lectura: 2285 | Voltaje: 1.84V | Progreso: 23%
+[14:19] Lectura: 2286 | Voltaje: 1.84V | Progreso: 23%
+[14:29] Lectura: 2257 | Voltaje: 1.82V | Progreso: 24%
+[14:39] Lectura: 2258 | Voltaje: 1.82V | Progreso: 24%
+[14:49] Lectura: 2262 | Voltaje: 1.82V | Progreso: 24%
+[14:59] Lectura: 2253 | Voltaje: 1.82V | Progreso: 24%
+[15:09] Lectura: 2219 | Voltaje: 1.79V | Progreso: 25%
+[15:19] Lectura: 2245 | Voltaje: 1.81V | Progreso: 25%
+[15:29] Lectura: 2224 | Voltaje: 1.79V | Progreso: 25%
+[15:39] Lectura: 2226 | Voltaje: 1.79V | Progreso: 26%
+[15:49] Lectura: 2209 | Voltaje: 1.78V | Progreso: 26%
+[15:59] Lectura: 2201 | Voltaje: 1.77V | Progreso: 26%
+[16:09] Lectura: 2224 | Voltaje: 1.79V | Progreso: 26%
+[16:19] Lectura: 2223 | Voltaje: 1.79V | Progreso: 27%
+[16:29] Lectura: 2199 | Voltaje: 1.77V | Progreso: 27%
+[16:39] Lectura: 2223 | Voltaje: 1.79V | Progreso: 27%
+[16:49] Lectura: 2182 | Voltaje: 1.76V | Progreso: 28%
+[16:59] Lectura: 2203 | Voltaje: 1.78V | Progreso: 28%
+[17:09] Lectura: 2173 | Voltaje: 1.75V | Progreso: 28%
+[17:19] Lectura: 2190 | Voltaje: 1.76V | Progreso: 28%
+[17:29] Lectura: 2175 | Voltaje: 1.75V | Progreso: 29%
+[17:39] Lectura: 2177 | Voltaje: 1.75V | Progreso: 29%
+[17:49] Lectura: 2199 | Voltaje: 1.77V | Progreso: 29%
+[17:59] Lectura: 2229 | Voltaje: 1.80V | Progreso: 29%
+[18:09] Lectura: 2229 | Voltaje: 1.80V | Progreso: 30%
+[18:19] Lectura: 2221 | Voltaje: 1.79V | Progreso: 30%
+[18:29] Lectura: 2192 | Voltaje: 1.77V | Progreso: 30%
+[18:39] Lectura: 2215 | Voltaje: 1.78V | Progreso: 31%
+[18:49] Lectura: 2219 | Voltaje: 1.79V | Progreso: 31%
+[18:59] Lectura: 2187 | Voltaje: 1.76V | Progreso: 31%
+[19:09] Lectura: 2204 | Voltaje: 1.78V | Progreso: 31%
+[19:19] Lectura: 2210 | Voltaje: 1.78V | Progreso: 32%
+[19:29] Lectura: 2186 | Voltaje: 1.76V | Progreso: 32%
+[19:39] Lectura: 2173 | Voltaje: 1.75V | Progreso: 32%
+[19:49] Lectura: 2176 | Voltaje: 1.75V | Progreso: 33%
+[19:59] Lectura: 2162 | Voltaje: 1.74V | Progreso: 33%
+[20:09] Lectura: 2161 | Voltaje: 1.74V | Progreso: 33%
+[20:19] Lectura: 2189 | Voltaje: 1.76V | Progreso: 33%
+[20:29] Lectura: 2124 | Voltaje: 1.71V | Progreso: 34%
+[20:39] Lectura: 2176 | Voltaje: 1.75V | Progreso: 34%
+[20:49] Lectura: 2149 | Voltaje: 1.73V | Progreso: 34%
+[20:59] Lectura: 2157 | Voltaje: 1.74V | Progreso: 34%
+[21:09] Lectura: 2149 | Voltaje: 1.73V | Progreso: 35%
+[21:19] Lectura: 2161 | Voltaje: 1.74V | Progreso: 35%
+[21:29] Lectura: 2142 | Voltaje: 1.73V | Progreso: 35%
+[21:39] Lectura: 2160 | Voltaje: 1.74V | Progreso: 36%
+[21:49] Lectura: 2138 | Voltaje: 1.72V | Progreso: 36%
+[21:59] Lectura: 2147 | Voltaje: 1.73V | Progreso: 36%
+[22:09] Lectura: 2124 | Voltaje: 1.71V | Progreso: 36%
+[22:19] Lectura: 2155 | Voltaje: 1.74V | Progreso: 37%
+[22:29] Lectura: 2135 | Voltaje: 1.72V | Progreso: 37%
+[22:39] Lectura: 2128 | Voltaje: 1.71V | Progreso: 37%
+[22:49] Lectura: 2126 | Voltaje: 1.71V | Progreso: 38%
+[22:59] Lectura: 2130 | Voltaje: 1.72V | Progreso: 38%
+[23:09] Lectura: 2143 | Voltaje: 1.73V | Progreso: 38%
+[23:19] Lectura: 2123 | Voltaje: 1.71V | Progreso: 38%
+[23:29] Lectura: 2129 | Voltaje: 1.72V | Progreso: 39%
+[23:39] Lectura: 2119 | Voltaje: 1.71V | Progreso: 39%
+[23:49] Lectura: 2112 | Voltaje: 1.70V | Progreso: 39%
+[23:59] Lectura: 2096 | Voltaje: 1.69V | Progreso: 39%
+[24:09] Lectura: 2103 | Voltaje: 1.69V | Progreso: 40%
+[24:19] Lectura: 2085 | Voltaje: 1.68V | Progreso: 40%
+[24:29] Lectura: 2102 | Voltaje: 1.69V | Progreso: 40%
+[24:39] Lectura: 2093 | Voltaje: 1.69V | Progreso: 41%
+[24:49] Lectura: 2097 | Voltaje: 1.69V | Progreso: 41%
+[24:59] Lectura: 2087 | Voltaje: 1.68V | Progreso: 41%
+[25:09] Lectura: 2112 | Voltaje: 1.70V | Progreso: 41%
+[25:19] Lectura: 2085 | Voltaje: 1.68V | Progreso: 42%
+[25:29] Lectura: 2091 | Voltaje: 1.69V | Progreso: 42%
+[25:39] Lectura: 2077 | Voltaje: 1.67V | Progreso: 42%
+[25:49] Lectura: 2083 | Voltaje: 1.68V | Progreso: 43%
+[25:59] Lectura: 2067 | Voltaje: 1.67V | Progreso: 43%
+[26:09] Lectura: 2070 | Voltaje: 1.67V | Progreso: 43%
+[26:19] Lectura: 2070 | Voltaje: 1.67V | Progreso: 43%
+[26:29] Lectura: 2083 | Voltaje: 1.68V | Progreso: 44%
+[26:39] Lectura: 2064 | Voltaje: 1.66V | Progreso: 44%
+[26:49] Lectura: 2073 | Voltaje: 1.67V | Progreso: 44%
+[26:59] Lectura: 2078 | Voltaje: 1.67V | Progreso: 44%
+[27:09] Lectura: 2062 | Voltaje: 1.66V | Progreso: 45%
+[27:19] Lectura: 2045 | Voltaje: 1.65V | Progreso: 45%
+[27:29] Lectura: 2047 | Voltaje: 1.65V | Progreso: 45%
+[27:39] Lectura: 2064 | Voltaje: 1.66V | Progreso: 46%
+[27:49] Lectura: 2063 | Voltaje: 1.66V | Progreso: 46%
+[27:59] Lectura: 2047 | Voltaje: 1.65V | Progreso: 46%
+[28:09] Lectura: 2057 | Voltaje: 1.66V | Progreso: 46%
+[28:19] Lectura: 2059 | Voltaje: 1.66V | Progreso: 47%
+[28:29] Lectura: 2033 | Voltaje: 1.64V | Progreso: 47%
+[28:39] Lectura: 2059 | Voltaje: 1.66V | Progreso: 47%
+[28:49] Lectura: 2032 | Voltaje: 1.64V | Progreso: 48%
+[28:59] Lectura: 2047 | Voltaje: 1.65V | Progreso: 48%
+[29:09] Lectura: 2061 | Voltaje: 1.66V | Progreso: 48%
+[29:19] Lectura: 2046 | Voltaje: 1.65V | Progreso: 48%
+[29:29] Lectura: 2047 | Voltaje: 1.65V | Progreso: 49%
+[29:39] Lectura: 2045 | Voltaje: 1.65V | Progreso: 49%
+[29:49] Lectura: 2002 | Voltaje: 1.61V | Progreso: 49%
+[29:59] Lectura: 2047 | Voltaje: 1.65V | Progreso: 49%
+[30:09] Lectura: 2042 | Voltaje: 1.65V | Progreso: 50%
+[30:19] Lectura: 2043 | Voltaje: 1.65V | Progreso: 50%
+[30:29] Lectura: 2056 | Voltaje: 1.66V | Progreso: 50%
+[30:39] Lectura: 2037 | Voltaje: 1.64V | Progreso: 51%
+[30:49] Lectura: 2037 | Voltaje: 1.64V | Progreso: 51%
+[30:59] Lectura: 2025 | Voltaje: 1.63V | Progreso: 51%
+[31:09] Lectura: 2029 | Voltaje: 1.64V | Progreso: 51%
+[31:19] Lectura: 2006 | Voltaje: 1.62V | Progreso: 52%
+[31:29] Lectura: 2013 | Voltaje: 1.62V | Progreso: 52%
+[31:39] Lectura: 2013 | Voltaje: 1.62V | Progreso: 52%
+[31:49] Lectura: 2009 | Voltaje: 1.62V | Progreso: 53%
+[31:59] Lectura: 2035 | Voltaje: 1.64V | Progreso: 53%
+[32:09] Lectura: 2017 | Voltaje: 1.63V | Progreso: 53%
+[32:19] Lectura: 2014 | Voltaje: 1.62V | Progreso: 53%
+[32:29] Lectura: 2021 | Voltaje: 1.63V | Progreso: 54%
+[32:39] Lectura: 2001 | Voltaje: 1.61V | Progreso: 54%
+[32:49] Lectura: 2007 | Voltaje: 1.62V | Progreso: 54%
+[32:59] Lectura: 2001 | Voltaje: 1.61V | Progreso: 54%
+[33:09] Lectura: 2000 | Voltaje: 1.61V | Progreso: 55%
+[33:19] Lectura: 2005 | Voltaje: 1.62V | Progreso: 55%
+[33:29] Lectura: 2000 | Voltaje: 1.61V | Progreso: 55%
+[33:39] Lectura: 1997 | Voltaje: 1.61V | Progreso: 56%
+[33:49] Lectura: 2006 | Voltaje: 1.62V | Progreso: 56%
+[33:59] Lectura: 2000 | Voltaje: 1.61V | Progreso: 56%
+[34:09] Lectura: 1991 | Voltaje: 1.60V | Progreso: 56%
+[34:19] Lectura: 1999 | Voltaje: 1.61V | Progreso: 57%
+[34:29] Lectura: 2010 | Voltaje: 1.62V | Progreso: 57%
+[34:39] Lectura: 2000 | Voltaje: 1.61V | Progreso: 57%
+[34:49] Lectura: 2032 | Voltaje: 1.64V | Progreso: 58%
+[34:59] Lectura: 2011 | Voltaje: 1.62V | Progreso: 58%
+[35:09] Lectura: 2000 | Voltaje: 1.61V | Progreso: 58%
+[35:19] Lectura: 2000 | Voltaje: 1.61V | Progreso: 58%
+[35:29] Lectura: 1990 | Voltaje: 1.60V | Progreso: 59%
+[35:39] Lectura: 2016 | Voltaje: 1.62V | Progreso: 59%
+[35:49] Lectura: 1995 | Voltaje: 1.61V | Progreso: 59%
+[35:59] Lectura: 1994 | Voltaje: 1.61V | Progreso: 59%
+[36:09] Lectura: 1998 | Voltaje: 1.61V | Progreso: 60%
+[36:19] Lectura: 1987 | Voltaje: 1.60V | Progreso: 60%
+[36:29] Lectura: 1999 | Voltaje: 1.61V | Progreso: 60%
+[36:39] Lectura: 1995 | Voltaje: 1.61V | Progreso: 61%
+[36:49] Lectura: 1986 | Voltaje: 1.60V | Progreso: 61%
+[36:59] Lectura: 1998 | Voltaje: 1.61V | Progreso: 61%
+[37:09] Lectura: 2001 | Voltaje: 1.61V | Progreso: 61%
+[37:19] Lectura: 1999 | Voltaje: 1.61V | Progreso: 62%
+[37:29] Lectura: 2010 | Voltaje: 1.62V | Progreso: 62%
+[37:39] Lectura: 1966 | Voltaje: 1.58V | Progreso: 62%
+[37:49] Lectura: 1968 | Voltaje: 1.59V | Progreso: 63%
+[37:59] Lectura: 1987 | Voltaje: 1.60V | Progreso: 63%
+[38:09] Lectura: 1955 | Voltaje: 1.58V | Progreso: 63%
+[38:19] Lectura: 1973 | Voltaje: 1.59V | Progreso: 63%
+[38:29] Lectura: 1949 | Voltaje: 1.57V | Progreso: 64%
+[38:39] Lectura: 1925 | Voltaje: 1.55V | Progreso: 64%
+[38:49] Lectura: 1954 | Voltaje: 1.57V | Progreso: 64%
+[38:59] Lectura: 1950 | Voltaje: 1.57V | Progreso: 64%
+[39:09] Lectura: 1933 | Voltaje: 1.56V | Progreso: 65%
+[39:19] Lectura: 1954 | Voltaje: 1.57V | Progreso: 65%
+[39:29] Lectura: 1927 | Voltaje: 1.55V | Progreso: 65%
+[39:39] Lectura: 1947 | Voltaje: 1.57V | Progreso: 66%
+[39:49] Lectura: 1911 | Voltaje: 1.54V | Progreso: 66%
+[39:59] Lectura: 1933 | Voltaje: 1.56V | Progreso: 66%
+[40:09] Lectura: 1937 | Voltaje: 1.56V | Progreso: 66%
+[40:19] Lectura: 1921 | Voltaje: 1.55V | Progreso: 67%
+[40:29] Lectura: 1936 | Voltaje: 1.56V | Progreso: 67%
+[40:39] Lectura: 1936 | Voltaje: 1.56V | Progreso: 67%
+[40:49] Lectura: 1948 | Voltaje: 1.57V | Progreso: 68%
+[40:59] Lectura: 1893 | Voltaje: 1.53V | Progreso: 68%
+[41:09] Lectura: 1911 | Voltaje: 1.54V | Progreso: 68%
+[41:19] Lectura: 1911 | Voltaje: 1.54V | Progreso: 68%
+[41:29] Lectura: 1905 | Voltaje: 1.54V | Progreso: 69%
+[41:39] Lectura: 1932 | Voltaje: 1.56V | Progreso: 69%
+[41:49] Lectura: 1921 | Voltaje: 1.55V | Progreso: 69%
+[41:59] Lectura: 1930 | Voltaje: 1.56V | Progreso: 69%
+[42:09] Lectura: 1941 | Voltaje: 1.56V | Progreso: 70%
+[42:19] Lectura: 1923 | Voltaje: 1.55V | Progreso: 70%
+[42:29] Lectura: 1922 | Voltaje: 1.55V | Progreso: 70%
+[42:39] Lectura: 1919 | Voltaje: 1.55V | Progreso: 71%
+[42:49] Lectura: 1921 | Voltaje: 1.55V | Progreso: 71%
+[42:59] Lectura: 1925 | Voltaje: 1.55V | Progreso: 71%
+[43:09] Lectura: 1901 | Voltaje: 1.53V | Progreso: 71%
+[43:19] Lectura: 1921 | Voltaje: 1.55V | Progreso: 72%
+[43:29] Lectura: 1936 | Voltaje: 1.56V | Progreso: 72%
+[43:39] Lectura: 1935 | Voltaje: 1.56V | Progreso: 72%
+[43:49] Lectura: 1907 | Voltaje: 1.54V | Progreso: 73%
+[43:59] Lectura: 1936 | Voltaje: 1.56V | Progreso: 73%
+[44:09] Lectura: 1925 | Voltaje: 1.55V | Progreso: 73%
+[44:19] Lectura: 1931 | Voltaje: 1.56V | Progreso: 73%
+[44:29] Lectura: 1917 | Voltaje: 1.54V | Progreso: 74%
+[44:39] Lectura: 1915 | Voltaje: 1.54V | Progreso: 74%
+[44:49] Lectura: 1891 | Voltaje: 1.52V | Progreso: 74%
+[44:59] Lectura: 1904 | Voltaje: 1.53V | Progreso: 74%
+[45:09] Lectura: 1904 | Voltaje: 1.53V | Progreso: 75%
+[45:19] Lectura: 1887 | Voltaje: 1.52V | Progreso: 75%
+[45:29] Lectura: 1905 | Voltaje: 1.54V | Progreso: 75%
+[45:39] Lectura: 1904 | Voltaje: 1.53V | Progreso: 76%
+[45:49] Lectura: 1886 | Voltaje: 1.52V | Progreso: 76%
+[45:59] Lectura: 1903 | Voltaje: 1.53V | Progreso: 76%
+[46:09] Lectura: 1895 | Voltaje: 1.53V | Progreso: 76%
+[46:19] Lectura: 1900 | Voltaje: 1.53V | Progreso: 77%
+[46:29] Lectura: 1895 | Voltaje: 1.53V | Progreso: 77%
+[46:39] Lectura: 1890 | Voltaje: 1.52V | Progreso: 77%
+[46:49] Lectura: 1894 | Voltaje: 1.53V | Progreso: 78%
+[46:59] Lectura: 1893 | Voltaje: 1.53V | Progreso: 78%
+[47:09] Lectura: 1873 | Voltaje: 1.51V | Progreso: 78%
+[47:19] Lectura: 1871 | Voltaje: 1.51V | Progreso: 78%
+[47:29] Lectura: 1881 | Voltaje: 1.52V | Progreso: 79%
+[47:39] Lectura: 1878 | Voltaje: 1.51V | Progreso: 79%
+[47:49] Lectura: 1879 | Voltaje: 1.51V | Progreso: 79%
+[47:59] Lectura: 1872 | Voltaje: 1.51V | Progreso: 79%
+[48:09] Lectura: 1886 | Voltaje: 1.52V | Progreso: 80%
+[48:19] Lectura: 1857 | Voltaje: 1.50V | Progreso: 80%
+[48:29] Lectura: 1866 | Voltaje: 1.50V | Progreso: 80%
+[48:39] Lectura: 1867 | Voltaje: 1.50V | Progreso: 81%
+[48:49] Lectura: 1876 | Voltaje: 1.51V | Progreso: 81%
+[48:59] Lectura: 1866 | Voltaje: 1.50V | Progreso: 81%
+[49:09] Lectura: 1868 | Voltaje: 1.51V | Progreso: 81%
+[49:19] Lectura: 1870 | Voltaje: 1.51V | Progreso: 82%
+[49:29] Lectura: 1869 | Voltaje: 1.51V | Progreso: 82%
+[49:39] Lectura: 1879 | Voltaje: 1.51V | Progreso: 82%
+[49:49] Lectura: 1866 | Voltaje: 1.50V | Progreso: 83%
+[49:59] Lectura: 1891 | Voltaje: 1.52V | Progreso: 83%
+[50:09] Lectura: 1894 | Voltaje: 1.53V | Progreso: 83%
+[50:19] Lectura: 1871 | Voltaje: 1.51V | Progreso: 83%
+[50:29] Lectura: 1874 | Voltaje: 1.51V | Progreso: 84%
+[50:39] Lectura: 1883 | Voltaje: 1.52V | Progreso: 84%
+[50:49] Lectura: 1881 | Voltaje: 1.52V | Progreso: 84%
+[50:59] Lectura: 1885 | Voltaje: 1.52V | Progreso: 84%
+[51:09] Lectura: 1884 | Voltaje: 1.52V | Progreso: 85%
+[51:19] Lectura: 1863 | Voltaje: 1.50V | Progreso: 85%
+[51:29] Lectura: 1871 | Voltaje: 1.51V | Progreso: 85%
+[51:39] Lectura: 1878 | Voltaje: 1.51V | Progreso: 86%
+[51:49] Lectura: 1854 | Voltaje: 1.49V | Progreso: 86%
+[51:59] Lectura: 1854 | Voltaje: 1.49V | Progreso: 86%
+[52:09] Lectura: 1839 | Voltaje: 1.48V | Progreso: 86%
+[52:19] Lectura: 1847 | Voltaje: 1.49V | Progreso: 87%
+[52:29] Lectura: 1858 | Voltaje: 1.50V | Progreso: 87%
+[52:39] Lectura: 1847 | Voltaje: 1.49V | Progreso: 87%
+[52:49] Lectura: 1862 | Voltaje: 1.50V | Progreso: 88%
+[52:59] Lectura: 1858 | Voltaje: 1.50V | Progreso: 88%
+[53:09] Lectura: 1879 | Voltaje: 1.51V | Progreso: 88%
+[53:19] Lectura: 1890 | Voltaje: 1.52V | Progreso: 88%
+[53:29] Lectura: 1887 | Voltaje: 1.52V | Progreso: 89%
+[53:39] Lectura: 1903 | Voltaje: 1.53V | Progreso: 89%
+[53:49] Lectura: 1872 | Voltaje: 1.51V | Progreso: 89%
+[53:59] Lectura: 1872 | Voltaje: 1.51V | Progreso: 89%
+[54:09] Lectura: 1899 | Voltaje: 1.53V | Progreso: 90%
+[54:19] Lectura: 1887 | Voltaje: 1.52V | Progreso: 90%
+[54:29] Lectura: 1871 | Voltaje: 1.51V | Progreso: 90%
+[54:39] Lectura: 1876 | Voltaje: 1.51V | Progreso: 91%
+[54:49] Lectura: 1882 | Voltaje: 1.52V | Progreso: 91%
+[54:59] Lectura: 1885 | Voltaje: 1.52V | Progreso: 91%
+[55:09] Lectura: 1910 | Voltaje: 1.54V | Progreso: 91%
+[55:19] Lectura: 1872 | Voltaje: 1.51V | Progreso: 92%
+[55:29] Lectura: 1898 | Voltaje: 1.53V | Progreso: 92%
+[55:39] Lectura: 1907 | Voltaje: 1.54V | Progreso: 92%
+[55:49] Lectura: 1881 | Voltaje: 1.52V | Progreso: 93%
+[55:59] Lectura: 1907 | Voltaje: 1.54V | Progreso: 93%
+[56:09] Lectura: 1915 | Voltaje: 1.54V | Progreso: 93%
+[56:19] Lectura: 1920 | Voltaje: 1.55V | Progreso: 93%
+[56:29] Lectura: 1900 | Voltaje: 1.53V | Progreso: 94%
+[56:39] Lectura: 1904 | Voltaje: 1.53V | Progreso: 94%
+[56:49] Lectura: 1919 | Voltaje: 1.55V | Progreso: 94%
+[56:59] Lectura: 1905 | Voltaje: 1.54V | Progreso: 94%
+[57:09] Lectura: 1886 | Voltaje: 1.52V | Progreso: 95%
+[57:19] Lectura: 1891 | Voltaje: 1.52V | Progreso: 95%
+[57:29] Lectura: 1885 | Voltaje: 1.52V | Progreso: 95%
+[57:39] Lectura: 1898 | Voltaje: 1.53V | Progreso: 96%
+[57:49] Lectura: 1874 | Voltaje: 1.51V | Progreso: 96%
+[57:59] Lectura: 1898 | Voltaje: 1.53V | Progreso: 96%
+[58:09] Lectura: 1910 | Voltaje: 1.54V | Progreso: 96%
+[58:19] Lectura: 1936 | Voltaje: 1.56V | Progreso: 97%
+[58:29] Lectura: 1857 | Voltaje: 1.50V | Progreso: 97%
+[58:39] Lectura: 1872 | Voltaje: 1.51V | Progreso: 97%
+[58:49] Lectura: 1854 | Voltaje: 1.49V | Progreso: 98%
+[58:59] Lectura: 1859 | Voltaje: 1.50V | Progreso: 98%
+[59:09] Lectura: 1849 | Voltaje: 1.49V | Progreso: 98%
+[59:19] Lectura: 1840 | Voltaje: 1.48V | Progreso: 98%
+[59:29] Lectura: 1847 | Voltaje: 1.49V | Progreso: 99%
+[59:39] Lectura: 1845 | Voltaje: 1.49V | Progreso: 99%
+[59:49] Lectura: 1856 | Voltaje: 1.50V | Progreso: 99%
+[59:59] Lectura: 1847 | Voltaje: 1.49V | Progreso: 99%
+
+
+[!] TIEMPO CUMPLIDO: Registro finalizado.
+Escribe 'D' para descargar el JSON.
+
+--- INICIO DE DATOS JSON ---
+{"t_ms":9851,"raw":3099,"v":2.497363}
+{"t_ms":19851,"raw":3035,"v":2.445787}
+{"t_ms":29851,"raw":2967,"v":2.390989}
+{"t_ms":39851,"raw":2913,"v":2.347472}
+{"t_ms":49851,"raw":2879,"v":2.320073}
+{"t_ms":59851,"raw":2935,"v":2.365201}
+{"t_ms":69851,"raw":2894,"v":2.332161}
+{"t_ms":79851,"raw":2845,"v":2.292674}
+{"t_ms":89851,"raw":2839,"v":2.287839}
+{"t_ms":99851,"raw":2816,"v":2.269304}
+{"t_ms":109851,"raw":2736,"v":2.204835}
+{"t_ms":119851,"raw":2739,"v":2.207253}
+{"t_ms":129851,"raw":2717,"v":2.189524}
+{"t_ms":139851,"raw":2720,"v":2.191941}
+{"t_ms":149851,"raw":2689,"v":2.16696}
+{"t_ms":159851,"raw":2660,"v":2.14359}
+{"t_ms":169851,"raw":2650,"v":2.135531}
+{"t_ms":179851,"raw":2637,"v":2.125055}
+{"t_ms":189851,"raw":2622,"v":2.112967}
+{"t_ms":199851,"raw":2610,"v":2.103297}
+{"t_ms":209851,"raw":2586,"v":2.083956}
+{"t_ms":219851,"raw":2597,"v":2.09282}
+{"t_ms":229851,"raw":2559,"v":2.062198}
+{"t_ms":239851,"raw":2557,"v":2.060586}
+{"t_ms":249851,"raw":2559,"v":2.062198}
+{"t_ms":259851,"raw":2543,"v":2.049304}
+{"t_ms":269851,"raw":2533,"v":2.041245}
+{"t_ms":279851,"raw":2517,"v":2.028352}
+{"t_ms":289851,"raw":2529,"v":2.038022}
+{"t_ms":299851,"raw":2499,"v":2.013846}
+{"t_ms":309851,"raw":2487,"v":2.004176}
+{"t_ms":319851,"raw":2481,"v":1.999341}
+{"t_ms":329851,"raw":2469,"v":1.98967}
+{"t_ms":339851,"raw":2469,"v":1.98967}
+{"t_ms":349851,"raw":2471,"v":1.991282}
+{"t_ms":359851,"raw":2464,"v":1.985641}
+{"t_ms":369851,"raw":2451,"v":1.975165}
+{"t_ms":379851,"raw":2448,"v":1.972747}
+{"t_ms":389851,"raw":2448,"v":1.972747}
+{"t_ms":399851,"raw":2448,"v":1.972747}
+{"t_ms":409851,"raw":2412,"v":1.943736}
+{"t_ms":419851,"raw":2426,"v":1.955018}
+{"t_ms":429851,"raw":2411,"v":1.94293}
+{"t_ms":439851,"raw":2413,"v":1.944542}
+{"t_ms":449851,"raw":2403,"v":1.936484}
+{"t_ms":459851,"raw":2410,"v":1.942124}
+{"t_ms":469851,"raw":2397,"v":1.931648}
+{"t_ms":479851,"raw":2397,"v":1.931648}
+{"t_ms":489851,"raw":2390,"v":1.926007}
+{"t_ms":499851,"raw":2382,"v":1.91956}
+{"t_ms":509851,"raw":2365,"v":1.905861}
+{"t_ms":519851,"raw":2357,"v":1.899414}
+{"t_ms":529851,"raw":2373,"v":1.912308}
+{"t_ms":539851,"raw":2365,"v":1.905861}
+{"t_ms":549851,"raw":2352,"v":1.895385}
+{"t_ms":559851,"raw":2351,"v":1.894579}
+{"t_ms":569851,"raw":2342,"v":1.887326}
+{"t_ms":579851,"raw":2352,"v":1.895385}
+{"t_ms":589851,"raw":2329,"v":1.87685}
+{"t_ms":599851,"raw":2327,"v":1.875238}
+{"t_ms":609851,"raw":2352,"v":1.895385}
+{"t_ms":619851,"raw":2327,"v":1.875238}
+{"t_ms":629851,"raw":2320,"v":1.869597}
+{"t_ms":639851,"raw":2329,"v":1.87685}
+{"t_ms":649851,"raw":2319,"v":1.868791}
+{"t_ms":659851,"raw":2305,"v":1.857509}
+{"t_ms":669851,"raw":2299,"v":1.852674}
+{"t_ms":679851,"raw":2303,"v":1.855897}
+{"t_ms":689851,"raw":2295,"v":1.849451}
+{"t_ms":699851,"raw":2302,"v":1.855092}
+{"t_ms":709851,"raw":2301,"v":1.854286}
+{"t_ms":719851,"raw":2306,"v":1.858315}
+{"t_ms":729851,"raw":2304,"v":1.856703}
+{"t_ms":739851,"raw":2318,"v":1.867985}
+{"t_ms":749851,"raw":2303,"v":1.855897}
+{"t_ms":759851,"raw":2306,"v":1.858315}
+{"t_ms":769851,"raw":2319,"v":1.868791}
+{"t_ms":779851,"raw":2302,"v":1.855092}
+{"t_ms":789851,"raw":2286,"v":1.842198}
+{"t_ms":799851,"raw":2290,"v":1.845421}
+{"t_ms":809851,"raw":2302,"v":1.855092}
+{"t_ms":819851,"raw":2272,"v":1.830916}
+{"t_ms":829851,"raw":2273,"v":1.831722}
+{"t_ms":839851,"raw":2279,"v":1.836557}
+{"t_ms":849851,"raw":2285,"v":1.841392}
+{"t_ms":859851,"raw":2286,"v":1.842198}
+{"t_ms":869851,"raw":2257,"v":1.818828}
+{"t_ms":879851,"raw":2258,"v":1.819634}
+{"t_ms":889851,"raw":2262,"v":1.822857}
+{"t_ms":899851,"raw":2253,"v":1.815604}
+{"t_ms":909851,"raw":2219,"v":1.788205}
+{"t_ms":919851,"raw":2245,"v":1.809157}
+{"t_ms":929851,"raw":2224,"v":1.792234}
+{"t_ms":939851,"raw":2226,"v":1.793846}
+{"t_ms":949851,"raw":2209,"v":1.780146}
+{"t_ms":959851,"raw":2201,"v":1.7737}
+{"t_ms":969851,"raw":2224,"v":1.792234}
+{"t_ms":979851,"raw":2223,"v":1.791429}
+{"t_ms":989851,"raw":2199,"v":1.772088}
+{"t_ms":999851,"raw":2223,"v":1.791429}
+{"t_ms":1009851,"raw":2182,"v":1.758388}
+{"t_ms":1019851,"raw":2203,"v":1.775311}
+{"t_ms":1029851,"raw":2173,"v":1.751136}
+{"t_ms":1039851,"raw":2190,"v":1.764835}
+{"t_ms":1049851,"raw":2175,"v":1.752747}
+{"t_ms":1059851,"raw":2177,"v":1.754359}
+{"t_ms":1069851,"raw":2199,"v":1.772088}
+{"t_ms":1079851,"raw":2229,"v":1.796264}
+{"t_ms":1089851,"raw":2229,"v":1.796264}
+{"t_ms":1099851,"raw":2221,"v":1.789817}
+{"t_ms":1109851,"raw":2192,"v":1.766447}
+{"t_ms":1119851,"raw":2215,"v":1.784982}
+{"t_ms":1129851,"raw":2219,"v":1.788205}
+{"t_ms":1139851,"raw":2187,"v":1.762418}
+{"t_ms":1149851,"raw":2204,"v":1.776117}
+{"t_ms":1159851,"raw":2210,"v":1.780952}
+{"t_ms":1169851,"raw":2186,"v":1.761612}
+{"t_ms":1179851,"raw":2173,"v":1.751136}
+{"t_ms":1189851,"raw":2176,"v":1.753553}
+{"t_ms":1199851,"raw":2162,"v":1.742271}
+{"t_ms":1209851,"raw":2161,"v":1.741465}
+{"t_ms":1219851,"raw":2189,"v":1.764029}
+{"t_ms":1229851,"raw":2124,"v":1.711648}
+{"t_ms":1239851,"raw":2176,"v":1.753553}
+{"t_ms":1249851,"raw":2149,"v":1.731795}
+{"t_ms":1259851,"raw":2157,"v":1.738242}
+{"t_ms":1269851,"raw":2149,"v":1.731795}
+{"t_ms":1279851,"raw":2161,"v":1.741465}
+{"t_ms":1289851,"raw":2142,"v":1.726154}
+{"t_ms":1299851,"raw":2160,"v":1.740659}
+{"t_ms":1309851,"raw":2138,"v":1.72293}
+{"t_ms":1319851,"raw":2147,"v":1.730183}
+{"t_ms":1329851,"raw":2124,"v":1.711648}
+{"t_ms":1339851,"raw":2155,"v":1.73663}
+{"t_ms":1349851,"raw":2135,"v":1.720513}
+{"t_ms":1359851,"raw":2128,"v":1.714872}
+{"t_ms":1369851,"raw":2126,"v":1.71326}
+{"t_ms":1379851,"raw":2130,"v":1.716483}
+{"t_ms":1389851,"raw":2143,"v":1.72696}
+{"t_ms":1399851,"raw":2123,"v":1.710842}
+{"t_ms":1409851,"raw":2129,"v":1.715678}
+{"t_ms":1419851,"raw":2119,"v":1.707619}
+{"t_ms":1429851,"raw":2112,"v":1.701978}
+{"t_ms":1439851,"raw":2096,"v":1.689084}
+{"t_ms":1449851,"raw":2103,"v":1.694725}
+{"t_ms":1459851,"raw":2085,"v":1.68022}
+{"t_ms":1469851,"raw":2102,"v":1.693919}
+{"t_ms":1479851,"raw":2093,"v":1.686667}
+{"t_ms":1489851,"raw":2097,"v":1.68989}
+{"t_ms":1499851,"raw":2087,"v":1.681831}
+{"t_ms":1509851,"raw":2112,"v":1.701978}
+{"t_ms":1519851,"raw":2085,"v":1.68022}
+{"t_ms":1529851,"raw":2091,"v":1.685055}
+{"t_ms":1539851,"raw":2077,"v":1.673773}
+{"t_ms":1549851,"raw":2083,"v":1.678608}
+{"t_ms":1559851,"raw":2067,"v":1.665714}
+{"t_ms":1569851,"raw":2070,"v":1.668132}
+{"t_ms":1579851,"raw":2070,"v":1.668132}
+{"t_ms":1589851,"raw":2083,"v":1.678608}
+{"t_ms":1599851,"raw":2064,"v":1.663297}
+{"t_ms":1609851,"raw":2073,"v":1.670549}
+{"t_ms":1619851,"raw":2078,"v":1.674579}
+{"t_ms":1629851,"raw":2062,"v":1.661685}
+{"t_ms":1639851,"raw":2045,"v":1.647985}
+{"t_ms":1649851,"raw":2047,"v":1.649597}
+{"t_ms":1659851,"raw":2064,"v":1.663297}
+{"t_ms":1669851,"raw":2063,"v":1.662491}
+{"t_ms":1679851,"raw":2047,"v":1.649597}
+{"t_ms":1689851,"raw":2057,"v":1.657656}
+{"t_ms":1699851,"raw":2059,"v":1.659267}
+{"t_ms":1709851,"raw":2033,"v":1.638315}
+{"t_ms":1719851,"raw":2059,"v":1.659267}
+{"t_ms":1729851,"raw":2032,"v":1.637509}
+{"t_ms":1739851,"raw":2047,"v":1.649597}
+{"t_ms":1749851,"raw":2061,"v":1.660879}
+{"t_ms":1759851,"raw":2046,"v":1.648791}
+{"t_ms":1769851,"raw":2047,"v":1.649597}
+{"t_ms":1779851,"raw":2045,"v":1.647985}
+{"t_ms":1789851,"raw":2002,"v":1.613333}
+{"t_ms":1799851,"raw":2047,"v":1.649597}
+{"t_ms":1809851,"raw":2042,"v":1.645568}
+{"t_ms":1819851,"raw":2043,"v":1.646374}
+{"t_ms":1829851,"raw":2056,"v":1.65685}
+{"t_ms":1839851,"raw":2037,"v":1.641539}
+{"t_ms":1849851,"raw":2037,"v":1.641539}
+{"t_ms":1859851,"raw":2025,"v":1.631868}
+{"t_ms":1869851,"raw":2029,"v":1.635092}
+{"t_ms":1879851,"raw":2006,"v":1.616557}
+{"t_ms":1889851,"raw":2013,"v":1.622198}
+{"t_ms":1899851,"raw":2013,"v":1.622198}
+{"t_ms":1909851,"raw":2009,"v":1.618974}
+{"t_ms":1919851,"raw":2035,"v":1.639927}
+{"t_ms":1929851,"raw":2017,"v":1.625421}
+{"t_ms":1939851,"raw":2014,"v":1.623004}
+{"t_ms":1949851,"raw":2021,"v":1.628645}
+{"t_ms":1959851,"raw":2001,"v":1.612527}
+{"t_ms":1969851,"raw":2007,"v":1.617363}
+{"t_ms":1979851,"raw":2001,"v":1.612527}
+{"t_ms":1989851,"raw":2000,"v":1.611722}
+{"t_ms":1999851,"raw":2005,"v":1.615751}
+{"t_ms":2009851,"raw":2000,"v":1.611722}
+{"t_ms":2019851,"raw":1997,"v":1.609304}
+{"t_ms":2029851,"raw":2006,"v":1.616557}
+{"t_ms":2039851,"raw":2000,"v":1.611722}
+{"t_ms":2049851,"raw":1991,"v":1.604469}
+{"t_ms":2059851,"raw":1999,"v":1.610916}
+{"t_ms":2069851,"raw":2010,"v":1.61978}
+{"t_ms":2079851,"raw":2000,"v":1.611722}
+{"t_ms":2089851,"raw":2032,"v":1.637509}
+{"t_ms":2099851,"raw":2011,"v":1.620586}
+{"t_ms":2109851,"raw":2000,"v":1.611722}
+{"t_ms":2119851,"raw":2000,"v":1.611722}
+{"t_ms":2129851,"raw":1990,"v":1.603663}
+{"t_ms":2139851,"raw":2016,"v":1.624615}
+{"t_ms":2149851,"raw":1995,"v":1.607692}
+{"t_ms":2159851,"raw":1994,"v":1.606887}
+{"t_ms":2169851,"raw":1998,"v":1.61011}
+{"t_ms":2179851,"raw":1987,"v":1.601245}
+{"t_ms":2189851,"raw":1999,"v":1.610916}
+{"t_ms":2199851,"raw":1995,"v":1.607692}
+{"t_ms":2209851,"raw":1986,"v":1.60044}
+{"t_ms":2219851,"raw":1998,"v":1.61011}
+{"t_ms":2229851,"raw":2001,"v":1.612527}
+{"t_ms":2239851,"raw":1999,"v":1.610916}
+{"t_ms":2249851,"raw":2010,"v":1.61978}
+{"t_ms":2259851,"raw":1966,"v":1.584322}
+{"t_ms":2269851,"raw":1968,"v":1.585934}
+{"t_ms":2279851,"raw":1987,"v":1.601245}
+{"t_ms":2289851,"raw":1955,"v":1.575458}
+{"t_ms":2299851,"raw":1973,"v":1.589963}
+{"t_ms":2309851,"raw":1949,"v":1.570623}
+{"t_ms":2319851,"raw":1925,"v":1.551282}
+{"t_ms":2329851,"raw":1954,"v":1.574652}
+{"t_ms":2339851,"raw":1950,"v":1.571429}
+{"t_ms":2349851,"raw":1933,"v":1.557729}
+{"t_ms":2359851,"raw":1954,"v":1.574652}
+{"t_ms":2369851,"raw":1927,"v":1.552894}
+{"t_ms":2379851,"raw":1947,"v":1.569011}
+{"t_ms":2389851,"raw":1911,"v":1.54}
+{"t_ms":2399851,"raw":1933,"v":1.557729}
+{"t_ms":2409851,"raw":1937,"v":1.560952}
+{"t_ms":2419851,"raw":1921,"v":1.548059}
+{"t_ms":2429851,"raw":1936,"v":1.560147}
+{"t_ms":2439851,"raw":1936,"v":1.560147}
+{"t_ms":2449851,"raw":1948,"v":1.569817}
+{"t_ms":2459851,"raw":1893,"v":1.525494}
+{"t_ms":2469851,"raw":1911,"v":1.54}
+{"t_ms":2479851,"raw":1911,"v":1.54}
+{"t_ms":2489851,"raw":1905,"v":1.535165}
+{"t_ms":2499851,"raw":1932,"v":1.556923}
+{"t_ms":2509851,"raw":1921,"v":1.548059}
+{"t_ms":2519851,"raw":1930,"v":1.555311}
+{"t_ms":2529851,"raw":1941,"v":1.564176}
+{"t_ms":2539851,"raw":1923,"v":1.54967}
+{"t_ms":2549851,"raw":1922,"v":1.548864}
+{"t_ms":2559851,"raw":1919,"v":1.546447}
+{"t_ms":2569851,"raw":1921,"v":1.548059}
+{"t_ms":2579851,"raw":1925,"v":1.551282}
+{"t_ms":2589851,"raw":1901,"v":1.531941}
+{"t_ms":2599851,"raw":1921,"v":1.548059}
+{"t_ms":2609851,"raw":1936,"v":1.560147}
+{"t_ms":2619851,"raw":1935,"v":1.559341}
+{"t_ms":2629851,"raw":1907,"v":1.536777}
+{"t_ms":2639851,"raw":1936,"v":1.560147}
+{"t_ms":2649851,"raw":1925,"v":1.551282}
+{"t_ms":2659851,"raw":1931,"v":1.556117}
+{"t_ms":2669851,"raw":1917,"v":1.544835}
+{"t_ms":2679851,"raw":1915,"v":1.543224}
+{"t_ms":2689851,"raw":1891,"v":1.523883}
+{"t_ms":2699851,"raw":1904,"v":1.534359}
+{"t_ms":2709851,"raw":1904,"v":1.534359}
+{"t_ms":2719851,"raw":1887,"v":1.520659}
+{"t_ms":2729851,"raw":1905,"v":1.535165}
+{"t_ms":2739851,"raw":1904,"v":1.534359}
+{"t_ms":2749851,"raw":1886,"v":1.519853}
+{"t_ms":2759851,"raw":1903,"v":1.533553}
+{"t_ms":2769851,"raw":1895,"v":1.527106}
+{"t_ms":2779851,"raw":1900,"v":1.531136}
+{"t_ms":2789851,"raw":1895,"v":1.527106}
+{"t_ms":2799851,"raw":1890,"v":1.523077}
+{"t_ms":2809851,"raw":1894,"v":1.5263}
+{"t_ms":2819851,"raw":1893,"v":1.525494}
+{"t_ms":2829851,"raw":1873,"v":1.509377}
+{"t_ms":2839851,"raw":1871,"v":1.507766}
+{"t_ms":2849851,"raw":1881,"v":1.515824}
+{"t_ms":2859851,"raw":1878,"v":1.513407}
+{"t_ms":2869851,"raw":1879,"v":1.514212}
+{"t_ms":2879851,"raw":1872,"v":1.508571}
+{"t_ms":2889851,"raw":1886,"v":1.519853}
+{"t_ms":2899851,"raw":1857,"v":1.496484}
+{"t_ms":2909851,"raw":1866,"v":1.503736}
+{"t_ms":2919851,"raw":1867,"v":1.504542}
+{"t_ms":2929851,"raw":1876,"v":1.511795}
+{"t_ms":2939851,"raw":1866,"v":1.503736}
+{"t_ms":2949851,"raw":1868,"v":1.505348}
+{"t_ms":2959851,"raw":1870,"v":1.50696}
+{"t_ms":2969851,"raw":1869,"v":1.506154}
+{"t_ms":2979851,"raw":1879,"v":1.514212}
+{"t_ms":2989851,"raw":1866,"v":1.503736}
+{"t_ms":2999851,"raw":1891,"v":1.523883}
+{"t_ms":3009851,"raw":1894,"v":1.5263}
+{"t_ms":3019851,"raw":1871,"v":1.507766}
+{"t_ms":3029851,"raw":1874,"v":1.510183}
+{"t_ms":3039851,"raw":1883,"v":1.517436}
+{"t_ms":3049851,"raw":1881,"v":1.515824}
+{"t_ms":3059851,"raw":1885,"v":1.519048}
+{"t_ms":3069851,"raw":1884,"v":1.518242}
+{"t_ms":3079851,"raw":1863,"v":1.501319}
+{"t_ms":3089851,"raw":1871,"v":1.507766}
+{"t_ms":3099851,"raw":1878,"v":1.513407}
+{"t_ms":3109851,"raw":1854,"v":1.494066}
+{"t_ms":3119851,"raw":1854,"v":1.494066}
+{"t_ms":3129851,"raw":1839,"v":1.481978}
+{"t_ms":3139851,"raw":1847,"v":1.488425}
+{"t_ms":3149851,"raw":1858,"v":1.497289}
+{"t_ms":3159851,"raw":1847,"v":1.488425}
+{"t_ms":3169851,"raw":1862,"v":1.500513}
+{"t_ms":3179851,"raw":1858,"v":1.497289}
+{"t_ms":3189851,"raw":1879,"v":1.514212}
+{"t_ms":3199851,"raw":1890,"v":1.523077}
+{"t_ms":3209851,"raw":1887,"v":1.520659}
+{"t_ms":3219851,"raw":1903,"v":1.533553}
+{"t_ms":3229851,"raw":1872,"v":1.508571}
+{"t_ms":3239851,"raw":1872,"v":1.508571}
+{"t_ms":3249851,"raw":1899,"v":1.53033}
+{"t_ms":3259851,"raw":1887,"v":1.520659}
+{"t_ms":3269851,"raw":1871,"v":1.507766}
+{"t_ms":3279851,"raw":1876,"v":1.511795}
+{"t_ms":3289851,"raw":1882,"v":1.51663}
+{"t_ms":3299851,"raw":1885,"v":1.519048}
+{"t_ms":3309851,"raw":1910,"v":1.539194}
+{"t_ms":3319851,"raw":1872,"v":1.508571}
+{"t_ms":3329851,"raw":1898,"v":1.529524}
+{"t_ms":3339851,"raw":1907,"v":1.536777}
+{"t_ms":3349851,"raw":1881,"v":1.515824}
+{"t_ms":3359851,"raw":1907,"v":1.536777}
+{"t_ms":3369851,"raw":1915,"v":1.543224}
+{"t_ms":3379851,"raw":1920,"v":1.547253}
+{"t_ms":3389851,"raw":1900,"v":1.531136}
+{"t_ms":3399851,"raw":1904,"v":1.534359}
+{"t_ms":3409851,"raw":1919,"v":1.546447}
+{"t_ms":3419851,"raw":1905,"v":1.535165}
+{"t_ms":3429851,"raw":1886,"v":1.519853}
+{"t_ms":3439851,"raw":1891,"v":1.523883}
+{"t_ms":3449851,"raw":1885,"v":1.519048}
+{"t_ms":3459851,"raw":1898,"v":1.529524}
+{"t_ms":3469851,"raw":1874,"v":1.510183}
+{"t_ms":3479851,"raw":1898,"v":1.529524}
+{"t_ms":3489851,"raw":1910,"v":1.539194}
+{"t_ms":3499851,"raw":1936,"v":1.560147}
+{"t_ms":3509851,"raw":1857,"v":1.496484}
+{"t_ms":3519851,"raw":1872,"v":1.508571}
+{"t_ms":3529851,"raw":1854,"v":1.494066}
+{"t_ms":3539851,"raw":1859,"v":1.498095}
+{"t_ms":3549851,"raw":1849,"v":1.490037}
+{"t_ms":3559851,"raw":1840,"v":1.482784}
+{"t_ms":3569851,"raw":1847,"v":1.488425}
+{"t_ms":3579851,"raw":1845,"v":1.486813}
+{"t_ms":3589851,"raw":1856,"v":1.495678}
+{"t_ms":3599851,"raw":1847,"v":1.488425}
+--- FIN DE DATOS ---

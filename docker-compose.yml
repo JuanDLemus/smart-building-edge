@@ -1,0 +1,82 @@
+services:
+  mqtt:
+    image: eclipse-mosquitto:latest
+    platform: linux/arm64
+    container_name: smart-building-mqtt
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+    restart: unless-stopped
+
+  web:
+    build: .
+    platform: linux/arm64
+    container_name: smart-building-web
+    ports:
+      - "5001:5000"
+    environment:
+      - MQTT_BROKER=mqtt
+      - MQTT_PORT=1883
+      - DB_PATH=/app/data/building.db
+      - OCCUPANCY_MODEL_PATH=/app/occupancy_model.pkl
+    volumes:
+      - edge-data:/app/data
+    depends_on:
+      - mqtt
+    restart: unless-stopped
+
+  esp32-lab1:
+    build: .
+    platform: linux/arm64
+    container_name: esp32-lab1
+    command: python esp32_simulator.py
+    environment:
+      - MQTT_BROKER=mqtt
+      - MQTT_PORT=1883
+      - ROOM=LAB1
+    depends_on:
+      - mqtt
+    restart: unless-stopped
+
+  esp32-lab2:
+    build: .
+    platform: linux/arm64
+    container_name: esp32-lab2
+    command: python esp32_simulator.py
+    environment:
+      - MQTT_BROKER=mqtt
+      - MQTT_PORT=1883
+      - ROOM=LAB2
+    depends_on:
+      - mqtt
+    restart: unless-stopped
+
+  esp32-lab3:
+    build: .
+    platform: linux/arm64
+    container_name: esp32-lab3
+    command: python esp32_simulator.py
+    environment:
+      - MQTT_BROKER=mqtt
+      - MQTT_PORT=1883
+      - ROOM=LAB3
+    depends_on:
+      - mqtt
+    restart: unless-stopped
+
+  esp32-lab4:
+    build: .
+    platform: linux/arm64
+    container_name: esp32-lab4
+    command: python esp32_simulator.py
+    environment:
+      - MQTT_BROKER=mqtt
+      - MQTT_PORT=1883
+      - ROOM=LAB4
+    depends_on:
+      - mqtt
+    restart: unless-stopped
+
+volumes:
+  edge-data:

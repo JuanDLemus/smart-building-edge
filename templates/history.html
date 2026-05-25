@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="history_title">Historial de Lecturas</title>
+    <meta name="description" content="Smart Building Edge - Historial por laboratorio">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sabana:         #003D8F;
+            --sabana-mid:     #005EB8;
+            --sabana-light:   #C8DCF5;
+            --sabana-dim:     #EBF2FB;
+            --sabana-xdim:    #F5F9FE;
+
+            --bg:             #F6F9FE;
+            --bg-card:        #FFFFFF;
+            --bg-header:      rgba(255,255,255,0.94);
+
+            --vacio:          #10B981;
+            --vacio-rgb:      16,185,129;
+            --parcial:        #F59E0B;
+            --parcial-rgb:    245,158,11;
+            --ocupado:        #EF4444;
+            --ocupado-rgb:    239,68,68;
+
+            --text:           #091526;
+            --text-2:         #3A5780;
+            --text-3:         #8AA0C0;
+
+            --font:           'Outfit', sans-serif;
+            --mono:           'JetBrains Mono', monospace;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        header {
+            position: sticky; top: 0; z-index: 50;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.75rem 2rem;
+            background: var(--bg-header);
+            border-bottom: 1.5px solid var(--sabana-light);
+            backdrop-filter: blur(12px);
+        }
+
+        .header-left { display: flex; align-items: center; gap: 0.85rem; }
+
+        .logo-box {
+            width: 30px; height: 30px;
+            background: var(--sabana); border-radius: 7px;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .logo-box svg { width: 16px; height: 16px; fill: white; }
+
+        header h1 { font-size: 1rem; font-weight: 700; color: var(--sabana); }
+
+        .history-tag {
+            font-size: 0.62rem; font-weight: 700;
+            font-family: var(--mono); letter-spacing: 0.12em;
+            color: var(--sabana-mid);
+            background: var(--sabana-dim);
+            border: 1px solid var(--sabana-light);
+            border-radius: 4px; padding: 0.18rem 0.5rem;
+        }
+
+        .header-right { display: flex; align-items: center; gap: 0.65rem; }
+
+        .lang-selector {
+            display: flex; background: var(--sabana-dim);
+            border: 1px solid var(--sabana-light);
+            border-radius: 7px; padding: 2px;
+        }
+
+        .lang-btn {
+            background: transparent; border: none;
+            color: var(--text-2); padding: 0.27rem 0.55rem;
+            font-size: 0.7rem; font-weight: 700;
+            cursor: pointer; border-radius: 5px;
+            font-family: var(--mono); transition: all 0.18s;
+        }
+
+        .lang-btn.active { background: var(--sabana); color: #fff; }
+
+        .nav-btn {
+            background: var(--sabana-dim);
+            border: 1.5px solid var(--sabana-light);
+            color: var(--sabana);
+            padding: 0.35rem 0.85rem;
+            font-size: 0.78rem; font-weight: 600;
+            border-radius: 7px; text-decoration: none;
+            transition: all 0.18s; font-family: var(--font);
+        }
+
+        .nav-btn:hover { background: var(--sabana); color: #fff; border-color: var(--sabana); }
+
+        /* MAIN */
+        main {
+            flex: 1; max-width: 1320px; width: 100%;
+            margin: 0 auto; padding: 2rem 1.5rem;
+        }
+
+        .page-head { margin-bottom: 1.75rem; }
+
+        .page-title {
+            font-size: 1.4rem; font-weight: 800;
+            color: var(--sabana); letter-spacing: -0.02em;
+        }
+
+        .page-sub {
+            font-size: 0.72rem; color: var(--text-3);
+            font-family: var(--mono); letter-spacing: 0.05em;
+            margin-top: 0.3rem;
+        }
+
+        /* LABS GRID */
+        .labs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+        }
+
+        @media (max-width: 880px) { .labs-grid { grid-template-columns: 1fr; } }
+
+        /* LAB CARD */
+        .lab-card {
+            background: var(--bg-card);
+            border: 1.5px solid var(--sabana-light);
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex; flex-direction: column;
+            box-shadow: 0 2px 12px rgba(0,61,143,0.06);
+        }
+
+        .card-header {
+            display: flex; align-items: center;
+            justify-content: space-between;
+            padding: 0.9rem 1.2rem 0.8rem;
+            border-bottom: 1px solid var(--sabana-light);
+            background: var(--sabana-xdim);
+        }
+
+        .card-title-wrap {}
+
+        .card-title {
+            font-size: 0.95rem; font-weight: 800; color: var(--sabana);
+        }
+
+        .card-nick-label {
+            font-size: 0.67rem; font-weight: 600;
+            color: var(--text-3); font-family: var(--mono);
+            letter-spacing: 0.08em; text-transform: uppercase;
+            margin-top: 0.1rem;
+        }
+
+        .state-summary { display: flex; gap: 0.85rem; align-items: center; }
+
+        .sum-item { display: flex; align-items: center; gap: 0.28rem; font-size: 0.67rem; font-family: var(--mono); }
+
+        .sum-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+        .sum-dot.vacio   { background: var(--vacio); }
+        .sum-dot.parcial { background: var(--parcial); }
+        .sum-dot.ocupado { background: var(--ocupado); }
+
+        .sum-n   { font-weight: 700; color: var(--text-2); }
+        .sum-lbl { color: var(--text-3); }
+
+        /* SPARKLINE */
+        .spark-wrap {
+            padding: 0.7rem 1.2rem 0.4rem;
+            border-bottom: 1px solid var(--sabana-light);
+        }
+
+        .spark-label {
+            font-size: 0.63rem; font-family: var(--mono);
+            color: var(--text-3); letter-spacing: 0.1em;
+            text-transform: uppercase; margin-bottom: 0.35rem;
+        }
+
+        .spark-svg { width: 100%; height: 44px; display: block; overflow: visible; }
+
+        /* TABLE */
+        .tbl-scroll {
+            overflow-x: auto; max-height: 230px; overflow-y: auto;
+        }
+
+        .tbl-scroll::-webkit-scrollbar { width: 4px; height: 4px; }
+        .tbl-scroll::-webkit-scrollbar-track { background: transparent; }
+        .tbl-scroll::-webkit-scrollbar-thumb { background: var(--sabana-light); border-radius: 4px; }
+
+        table { width: 100%; border-collapse: collapse; }
+
+        thead { position: sticky; top: 0; background: var(--sabana-dim); z-index: 2; }
+
+        th {
+            padding: 0.48rem 1rem;
+            font-size: 0.65rem; font-weight: 700;
+            font-family: var(--mono); letter-spacing: 0.1em;
+            text-transform: uppercase; color: var(--text-3);
+            text-align: left; border-bottom: 1px solid var(--sabana-light);
+        }
+
+        td {
+            padding: 0.45rem 1rem;
+            font-size: 0.75rem; color: var(--text-2);
+            border-bottom: 1px solid rgba(0,61,143,0.05);
+            font-family: var(--mono); white-space: nowrap;
+        }
+
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: var(--sabana-xdim); color: var(--text); }
+
+        td.col-time { color: var(--text-3); font-size: 0.68rem; }
+        td.col-co2  { font-weight: 600; color: var(--sabana); }
+
+        .state-pill {
+            display: inline-flex; align-items: center; gap: 0.28rem;
+            padding: 0.14rem 0.48rem; border-radius: 10px;
+            font-size: 0.63rem; font-weight: 700;
+            letter-spacing: 0.06em; text-transform: uppercase;
+            border: 1px solid transparent; font-family: var(--mono);
+        }
+
+        .state-pill::before {
+            content: ''; width: 4px; height: 4px;
+            border-radius: 50%; flex-shrink: 0;
+        }
+
+        .state-pill.vacio   { background:rgba(var(--vacio-rgb),.08);   color:#0A7852; border-color:rgba(var(--vacio-rgb),.25); }
+        .state-pill.vacio::before   { background:var(--vacio); }
+        .state-pill.parcial { background:rgba(var(--parcial-rgb),.08); color:#92560A; border-color:rgba(var(--parcial-rgb),.25); }
+        .state-pill.parcial::before { background:var(--parcial); }
+        .state-pill.ocupado { background:rgba(var(--ocupado-rgb),.08); color:#991B1B; border-color:rgba(var(--ocupado-rgb),.25); }
+        .state-pill.ocupado::before { background:var(--ocupado); }
+
+        .card-footer {
+            padding: 0.5rem 1.2rem;
+            display: flex; align-items: center; justify-content: space-between;
+            border-top: 1px solid var(--sabana-light);
+            background: var(--sabana-xdim);
+        }
+
+        .footer-count { font-size: 0.65rem; color: var(--text-3); font-family: var(--mono); }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-left">
+        <div class="logo-box">
+            <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+        </div>
+        <h1 data-translate="history_title">Historial de Lecturas</h1>
+        <span class="history-tag">ÚLTIMAS 25 POR SALA</span>
+    </div>
+    <div class="header-right">
+        <div class="lang-selector">
+            <button class="lang-btn active" data-lang="es" onclick="changeLang('es')" id="btn-lang-es">ES</button>
+            <button class="lang-btn"        data-lang="en" onclick="changeLang('en')" id="btn-lang-en">EN</button>
+        </div>
+        <a href="/" class="nav-btn" id="nav-back" data-translate="back_to_dashboard">Panel de Control</a>
+    </div>
+</header>
+
+<main>
+    <div class="page-head">
+        <div class="page-title" data-translate="history_title">Historial de Lecturas</div>
+        <div class="page-sub">SMART BUILDING · EDIFICIO B · PISO 1</div>
+    </div>
+
+    <div class="labs-grid">
+        {% set lab_nicks = {'LAB1':'Automatización','LAB2':'Procesos','LAB3':'Lux','LAB4':'Física'} %}
+        {% set lab_trans = {'LAB1':'lab_1','LAB2':'lab_2','LAB3':'lab_3','LAB4':'lab_4'} %}
+        {% set lab_nick_trans = {'LAB1':'lab_1_nick','LAB2':'lab_2_nick','LAB3':'lab_3_nick','LAB4':'lab_4_nick'} %}
+
+        {% for lab in ['LAB1','LAB2','LAB3','LAB4'] %}
+        {% set rows = per_lab.get(lab, []) %}
+        {% set ns = namespace(v=0,p=0,o=0) %}
+        {% for r in rows %}
+            {% if r[4]|lower == 'vacio' %}{% set ns.v = ns.v+1 %}
+            {% elif r[4]|lower == 'parcial' %}{% set ns.p = ns.p+1 %}
+            {% elif r[4]|lower == 'ocupado' %}{% set ns.o = ns.o+1 %}
+            {% endif %}
+        {% endfor %}
+
+        <div class="lab-card">
+            <!-- Header -->
+            <div class="card-header">
+                <div class="card-title-wrap">
+                    <div class="card-title" data-translate="{{ lab_trans[lab] }}">{{ lab }}</div>
+                    <div class="card-nick-label" data-translate="{{ lab_nick_trans[lab] }}">{{ lab_nicks[lab] }}</div>
+                </div>
+                <div class="state-summary">
+                    <div class="sum-item">
+                        <div class="sum-dot vacio"></div>
+                        <span class="sum-n">{{ ns.v }}</span>
+                        <span class="sum-lbl" data-translate="status_vacio">Vacío</span>
+                    </div>
+                    <div class="sum-item">
+                        <div class="sum-dot parcial"></div>
+                        <span class="sum-n">{{ ns.p }}</span>
+                        <span class="sum-lbl" data-translate="status_parcial">Parcial</span>
+                    </div>
+                    <div class="sum-item">
+                        <div class="sum-dot ocupado"></div>
+                        <span class="sum-n">{{ ns.o }}</span>
+                        <span class="sum-lbl" data-translate="status_ocupado">Ocupado</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CO2 Sparkline -->
+            {% if rows|length > 1 %}
+            {% set co2_vals = rows | map(attribute=1) | list | reverse | list %}
+            {% set co2_max = co2_vals | max %}
+            {% set co2_min = co2_vals | min %}
+            {% set co2_range = (co2_max - co2_min) if co2_max != co2_min else 1 %}
+            {% set n = co2_vals|length %}
+            {% set step = 400.0 / (n - 1) if n > 1 else 400 %}
+            <div class="spark-wrap">
+                <div class="spark-label">CO₂ INDEX — TENDENCIA ({{ n }} LECTURAS)</div>
+                <svg class="spark-svg" viewBox="0 0 400 44" preserveAspectRatio="none" id="spark-{{ lab }}">
+                    <defs>
+                        <linearGradient id="grad-{{ lab }}" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="rgba(0,61,143,0.18)"/>
+                            <stop offset="100%" stop-color="rgba(0,61,143,0)"/>
+                        </linearGradient>
+                    </defs>
+                    <path
+                        d="M {% for v in co2_vals %}{{ loop.index0 * step | round(1) }},{{ (40 - ((v - co2_min) / co2_range) * 36) | round(1) }}{% if not loop.last %} L {% endif %}{% endfor %} L {{ ((n-1)*step) | round(1) }},44 L 0,44 Z"
+                        fill="url(#grad-{{ lab }})" stroke="none"/>
+                    <polyline
+                        points="{% for v in co2_vals %}{{ (loop.index0 * step) | round(1) }},{{ (40 - ((v - co2_min) / co2_range) * 36) | round(1) }} {% endfor %}"
+                        fill="none" stroke="var(--sabana-mid)" stroke-width="1.5"
+                        stroke-linejoin="round" stroke-linecap="round"/>
+                    {% set lv = co2_vals | last %}
+                    <circle cx="{{ ((n-1)*step) | round(1) }}" cy="{{ (40 - ((lv - co2_min) / co2_range) * 36) | round(1) }}"
+                            r="3" fill="var(--sabana)"/>
+                </svg>
+            </div>
+            {% endif %}
+
+            <!-- Table -->
+            <div class="tbl-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-translate="timestamp">Fecha/Hora</th>
+                            <th data-translate="co2_index">CO₂</th>
+                            <th data-translate="mq135">MQ135</th>
+                            <th data-translate="mq8">MQ8</th>
+                            <th data-translate="occupancy">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if rows %}
+                            {% for r in rows %}
+                            <tr>
+                                <td class="col-time">{{ r[0] }}</td>
+                                <td class="col-co2">{{ "%.1f"|format(r[1]) }}</td>
+                                <td>{{ r[2] }}</td>
+                                <td>{{ r[3] }}</td>
+                                <td>
+                                    <span class="state-pill {{ r[4]|lower }}" data-status-text="status_{{ r[4]|lower }}">{{ r[4] }}</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr><td colspan="5" style="text-align:center;color:var(--text-3);padding:1.5rem 0;">Sin datos aún</td></tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-footer">
+                <span class="footer-count">{{ rows|length }} lecturas</span>
+                <span class="footer-count">SEN-0{{ loop.index }} · MQTT · ML</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</main>
+
+<script>
+    let currentLang = localStorage.getItem('lang') || 'es';
+    let translations = {};
+
+    function changeLang(lang) { applyTranslations(lang); }
+
+    function applyTranslations(lang) {
+        currentLang = lang;
+        localStorage.setItem('lang', lang);
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+        document.querySelectorAll('[data-translate]').forEach(el => {
+            const k = el.getAttribute('data-translate');
+            if (translations[lang]?.[k]) el.textContent = translations[lang][k];
+        });
+        document.querySelectorAll('[data-status-text]').forEach(el => {
+            const k = el.getAttribute('data-status-text');
+            if (translations[lang]?.[k]) el.textContent = translations[lang][k];
+        });
+    }
+
+    fetch('/translations')
+        .then(r => r.json())
+        .then(d => { translations = d; applyTranslations(currentLang); })
+        .catch(err => console.error('Translations:', err));
+</script>
+</body>
+</html>

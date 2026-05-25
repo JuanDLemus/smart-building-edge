@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+*.db
+!dataset.csv
+venv/
+.env
+.idea/
+.vscode/
