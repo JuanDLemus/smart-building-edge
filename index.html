@@ -391,11 +391,15 @@ if __name__ == "__main__":
                         <ul style="font-size: 1.1em; line-height: 1.8;">
                             <li>
                                 <strong>Calibración Extrema del sensor MQ135:</strong><br>
-                                <span style="font-size: 0.85em; color: #94a3b8;">Experimentamos gran dificultad en la calibración física de su resistor variable (RL). Los índices de resistencia cambiaban drásticamente dependiendo de la humedad y presión climática, arrojando alarmas de polución que eran falsos positivos en climas muy fríos.</span>
+                                <span style="font-size: 0.85em; color: #94a3b8;">Experimentamos gran dificultad en la calibración física de su resistor variable (RL). Los índices de resistencia cambiaban drásticamente dependiendo de la humedad y presión climática. <strong>Sensores alternativos a explorar:</strong> El BME680 de Bosch o el SGP30 de Sensirion, los cuales integran medición de eCO2 (dióxido de carbono equivalente) compensado térmicamente de fábrica, entregando lecturas digitales estables sobre bus I2C en lugar de caídas de voltaje analógicas propensas a ruido.</span>
                             </li>
                             <li>
                                 <strong>Inestabilidad Wi-Fi Malla Institucional:</strong><br>
-                                <span style="font-size: 0.85em; color: #94a3b8;">La infraestructura empresarial expulsaba frecuentemente a los ESP32, por lo que fue imperativo programar rutinas de reconexión profunda para evitar bloqueos por tiempo de espera en el Watchdog Timer.</span>
+                                <span style="font-size: 0.85em; color: #94a3b8;">La infraestructura empresarial expulsaba frecuentemente a los ESP32, por lo que fue imperativo programar rutinas de reconexión profunda.</span>
+                            </li>
+                            <li>
+                                <strong>Tiempos Muertos sin Detección de Movimiento:</strong><br>
+                                <span style="font-size: 0.85em; color: #94a3b8;">Para optimizar aún más la predicción de "AULA VACÍA", se podrían fusionar los datos ambientales con sensores alternativos de presencia de bajo costo: como el radar de ondas milimétricas LD2410 (mmWave), capaz de detectar la micro-respiración humana estática, a diferencia de los sensores PIR tradicionales que fallan si los estudiantes están sentados sin moverse.</span>
                             </li>
                         </ul>
                     </div>
@@ -430,29 +434,29 @@ if __name__ == "__main__":
                         
                         <div class="glass-card" style="padding: 30px;">
                             <h4 style="font-size: 1.3em;">Contrarrestar Concept Drift</h4>
-                            <p style="font-size: 0.85em; color: #94a3b8;">Introducir un MLOps en línea (Online Machine Learning) capaz de asimilar fluctuaciones climáticas de largo plazo (como los cambios de estación) ajustando los pesos del árbol automáticamente para no perder precisión en el futuro.</p>
+                            <p style="font-size: 0.85em; color: #94a3b8;">Introducir un MLOps en línea (Online Machine Learning) capaz de asimilar fluctuaciones climáticas de largo plazo ajustando los pesos del árbol automáticamente para no perder precisión.</p>
                         </div>
 
                         <div class="glass-card" style="padding: 30px;">
-                            <h4 style="font-size: 1.3em;">Fusión Sensorial CV (Visión)</h4>
-                            <p style="font-size: 0.85em; color: #94a3b8;">Despliegue de un algoritmo OpenCV/YOLO ligero apuntando hacia el marco de las puertas para automatizar enteramente la tarea de recolección de Ground-Truth sin intervención humana.</p>
+                            <h4 style="font-size: 1.3em;">TinyML: Inferencia en el Microcontrolador</h4>
+                            <p style="font-size: 0.85em; color: #94a3b8;">Exportar el modelo Scikit-Learn entrenado a TensorFlow Lite for Microcontrollers (TFLite). Esto permitiría a los propios ESP32 ejecutar la inferencia localmente sin Wi-Fi, reportando únicamente el cambio de estado (Vacío/Ocupado) al servidor, reduciendo el tráfico MQTT en un 90%.</p>
                         </div>
                     </div>
                 </section>
                 
                 <!-- 7.2 Mejoras Infraestructura -->
                 <section>
-                    <h2>Posibilidades de Mejora: Componentes IoT</h2>
+                    <h2>Posibilidades de Mejora: Hardware e Infraestructura</h2>
                     <div class="member-grid" style="grid-template-columns: 1fr 1fr; gap: 30px; text-align: left;">
                         
                         <div class="glass-card" style="padding: 30px;">
-                            <h4 style="font-size: 1.3em;">Transición a Energía Solar</h4>
-                            <p style="font-size: 0.85em; color: #94a3b8;">Habilitar modos profundos (<code>Deep Sleep</code>) en los núcleos del ESP32 para consumir microamperios. Acoplar pequeños paneles solares que recarguen baterías 18650 posibilitando un despliegue 100% libre de cables en la pared.</p>
+                            <h4 style="font-size: 1.3em;">Transición a Energía Solar (Deep Sleep)</h4>
+                            <p style="font-size: 0.85em; color: #94a3b8;">Habilitar modos profundos (<code>Deep Sleep</code>) en los núcleos del ESP32 para consumir microamperios. Acoplar reguladores MPPT (Maximum Power Point Tracking) con paneles solares para recargar baterías 18650, posibilitando despliegues de pared sin enchufes.</p>
                         </div>
 
                         <div class="glass-card" style="padding: 30px;">
-                            <h4 style="font-size: 1.3em;">Flasheo OTA Centralizado</h4>
-                            <p style="font-size: 0.85em; color: #94a3b8;">Desarrollar una interfaz Over-The-Air conectada al broker para distribuir y forzar actualizaciones de parche a decenas de sensores distribuidos simultáneamente desde el panel administrativo.</p>
+                            <h4 style="font-size: 1.3em;">MQTT Cloud Bridging</h4>
+                            <p style="font-size: 0.85em; color: #94a3b8;">Configurar un enlace de puente (Bridge) en Mosquitto local para retransmitir asíncronamente los históricos agregados hacia brokers en la nube corporativa (ej. AWS IoT Core) posibilitando análisis de Big Data y retención multi-anual sin saturar la tarjeta SD de la Raspberry Pi.</p>
                         </div>
                     </div>
                 </section>
@@ -477,7 +481,6 @@ if __name__ == "__main__":
             <section>
                 <div class="glass-card">
                     <h1>¡Gracias por su Atención!</h1>
-                    <p style="color: #94a3b8; margin-top: 20px; font-size: 1.2em;">Ronda de Preguntas y Respuestas</p>
                 </div>
             </section>
 
