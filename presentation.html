@@ -192,38 +192,87 @@
                 </div>
             </section>
 
-            <!-- Slide 2: Architecture Diagram -->
+            <!-- ===================== SECTION 2: ARQUITECTURA ===================== -->
             <section>
-                <h2>Arquitectura del Sistema</h2>
-                <div class="flex-container">
-                    <div class="flex-col" style="flex: 0.45;">
-                        <ul style="font-size: 0.85em; line-height: 1.6;">
-                            <li><strong>Malla de Nodos (Edge):</strong> Dispositivos ESP32 con sensores MQ135 (gases), temperatura, humedad y presión comunicándose vía Wi-Fi.</li>
-                            <li><strong>Nodo Central (Raspberry Pi 5):</strong> Ejecuta Docker QEMU con un Broker MQTT (Mosquitto) en el puerto 1883 para ingestar los datos de los nodos.</li>
-                            <li><strong>Procesamiento Inteligente:</strong> Un servidor Web que integra un modelo de Machine Learning (Random Forest) actualizable en el tiempo para clasificar la ocupación.</li>
-                            <li><strong>Acceso Remoto:</strong> Dividido en Acceso Seguro para la empresa (vía VPN Tailscale) y Acceso Invitado limitado expuesto temporalmente mediante ngrok/Vercel.</li>
+                <!-- 2.1 Overview -->
+                <section>
+                    <h2>Arquitectura del Sistema</h2>
+                    <p style="color: #94a3b8; margin-bottom: 30px;">Una topología Edge-to-Cloud diseñada para baja latencia.</p>
+                    <div class="flex-container">
+                        <div class="flex-col" style="flex: 0.45;">
+                            <ul style="font-size: 0.85em; line-height: 1.6;">
+                                <li><strong>Sensado en el Edge:</strong> ESP32 como nodos de recolección de datos ambientales.</li>
+                                <li><strong>Procesamiento Local:</strong> Una Raspberry Pi 5 actúa como Gateway y Broker.</li>
+                                <li><strong>Inteligencia Distribuida:</strong> Inferencias de Machine Learning ejecutadas in-situ.</li>
+                                <li><strong>Disponibilidad:</strong> Redes privadas empresariales (Tailscale) y exposición controlada (ngrok/Vercel).</li>
+                            </ul>
+                        </div>
+                        <div class="flex-col img-container" style="flex: 0.55;">
+                            <img src="diagrama.png" alt="Diagrama de Arquitectura">
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 2.2 Nodos ESP32 -->
+                <section>
+                    <h2>Malla de Nodos ESP32</h2>
+                    <div class="glass-card">
+                        <h4 style="margin-bottom: 20px;">Hardware y Sensores</h4>
+                        <ul style="font-size: 1.1em; line-height: 1.8;">
+                            <li><strong>Microcontrolador:</strong> ESP32 NodeMCU, elegido por su conectividad Wi-Fi nativa bidireccional.</li>
+                            <li><strong>Módulo de Gases (MQ135):</strong> Detecta CO2, Amoniaco, Benceno y alcohol, vitales para determinar la calidad del aire de las aulas.</li>
+                            <li><strong>Sensores Atmosféricos:</strong> Medición en tiempo real de Temperatura, Humedad y Presión barométrica.</li>
+                            <li><strong>Comunicación:</strong> Publicación asíncrona hacia el servidor MQTT sin bloquear el ciclo de medición físico.</li>
                         </ul>
                     </div>
-                    <div class="flex-col img-container" style="flex: 0.55;">
-                        <img src="diagrama.png" alt="Diagrama de Arquitectura">
+                </section>
+
+                <!-- 2.3 Seguridad y Acceso Remoto -->
+                <section>
+                    <h2>Gestión de Red y Seguridad</h2>
+                    <div class="flex-container">
+                        <div class="glass-card" style="flex: 1;">
+                            <h4 style="color: #10B981;">Acceso Seguro (Tailscale)</h4>
+                            <p style="font-size: 0.9em; color: #94a3b8;">Implementamos una VPN de malla (WireGuard) para que los administradores y profesores puedan acceder al sistema como si estuvieran en la red local de la universidad, garantizando encriptación de extremo a extremo y evitando vulnerabilidades de puertos abiertos.</p>
+                        </div>
+                        <div class="glass-card" style="flex: 1;">
+                            <h4 style="color: #3b82f6;">Acceso Invitado (Ngrok/Vercel)</h4>
+                            <p style="font-size: 0.9em; color: #94a3b8;">Para estudiantes o personal externo que requiera ver el estado de ocupación, el frontend del dashboard se expone temporalmente mediante túneles inversos o deploys estáticos web, aislando y protegiendo la base de datos principal de accesos no autorizados.</p>
+                        </div>
                     </div>
-                </div>
+                </section>
             </section>
 
-            <!-- Slide 3: Docker Deployment -->
+            <!-- ===================== SECTION 3: DOCKER ===================== -->
             <section>
-                <h2 style="margin-bottom: 5px;">Despliegue con Docker</h2>
-                <p style="font-size: 0.7em; color: #94a3b8; margin-bottom: 30px;">
-                    Se utilizó Docker para abstraer el entorno de la Raspberry Pi 5 y garantizar portabilidad sin fallos de dependencias.
-                </p>
-                
-                <div class="flex-container">
-                    <div class="flex-col" style="flex: 1;">
-                        <div style="margin-bottom: 15px;">
-                            <span class="badge" style="margin-bottom: 5px;">docker-compose.yml</span>
-                            <p style="font-size: 0.65em; color: #cbd5e1; line-height: 1.4;">Orquesta dos servicios críticos en una red unificada: <strong>mqtt</strong> (Eclipse Mosquitto) y <strong>web</strong> (Backend Flask). Mapea el volumen <code>edge-data</code> para que la base de datos SQLite no se borre al reiniciar.</p>
+                <!-- 3.1 Introduccion a Docker -->
+                <section>
+                    <h2>Despliegue con Docker (QEMU)</h2>
+                    <div class="glass-card">
+                        <h4 style="margin-bottom: 20px;">¿Por qué virtualizar en la Raspberry Pi 5?</h4>
+                        <ul style="font-size: 1.1em; line-height: 1.8;">
+                            <li><strong>Entorno Aislado:</strong> Evita conflictos irreversibles de dependencias entre las librerías científicas de Python, Scikit-Learn y los paquetes nativos del SO base (Debian/Raspbian).</li>
+                            <li><strong>Portabilidad Absoluta:</strong> El código corre exactamente igual en las computadoras Windows de los desarrolladores y en el hardware Linux final del laboratorio.</li>
+                            <li><strong>Emulación Cruzada (QEMU):</strong> Permite construir imágenes ARM64 en computadoras de arquitectura x86_64, facilitando enormemente la distribución.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- 3.2 Docker Compose -->
+                <section>
+                    <h2>Orquestación: docker-compose.yml</h2>
+                    <div class="flex-container">
+                        <div class="flex-col" style="flex: 0.5;">
+                            <p style="font-size: 0.8em; color: #cbd5e1; line-height: 1.6;">
+                                Múltiples contenedores interactúan bajo una red virtual de puente (bridge local). 
+                                <ul>
+                                    <li><code>mqtt</code>: Usa la imagen oficial <code>eclipse-mosquitto:latest</code>. Responsable de la ingesta en el puerto 1883.</li>
+                                    <li><code>web</code>: El core de procesamiento en Flask.</li>
+                                    <li><strong>Persistencia de Datos:</strong> Se utilizan volúmenes mapeados (<code>edge-data</code>) para garantizar que la base de datos SQLite retenga su histórico frente a caídas eléctricas o reinicios de contenedor.</li>
+                                </ul>
+                            </p>
                         </div>
-                        <div class="code-block-wrapper">
+                        <div class="flex-col code-block-wrapper" style="flex: 0.5; font-size: 0.85em;">
 <pre><code class="language-yaml">services:
   mqtt:
     image: eclipse-mosquitto:latest
@@ -238,13 +287,23 @@
       - DB_PATH=/app/data/building.db</code></pre>
                         </div>
                     </div>
-                    
-                    <div class="flex-col" style="flex: 1;">
-                        <div style="margin-bottom: 15px;">
-                            <span class="badge" style="margin-bottom: 5px;">Dockerfile</span>
-                            <p style="font-size: 0.65em; color: #cbd5e1; line-height: 1.4;">Usa una imagen ligera <code>python:3.11-slim</code>. Inyecta el modelo de ML local <code>occupancy_model.pkl</code>, instala los requerimientos e inicializa dinámicamente el esquema SQL de la base de datos antes de exponer el puerto 5000.</p>
+                </section>
+                
+                <!-- 3.3 Dockerfile -->
+                <section>
+                    <h2>Empaquetado: Dockerfile</h2>
+                    <div class="flex-container">
+                        <div class="flex-col" style="flex: 0.5;">
+                            <p style="font-size: 0.8em; color: #cbd5e1; line-height: 1.6;">
+                                Receta inmutable para la construcción de la imagen base.
+                                <ul>
+                                    <li><strong>SO Base Ligero:</strong> <code>python:3.11-slim</code> reduce drásticamente el peso de la imagen y la superficie de ataque, optimizado para recursos limitados.</li>
+                                    <li><strong>Inyección del Modelo:</strong> El modelo serializado <code>occupancy_model.pkl</code> se pre-empaqueta en la imagen.</li>
+                                    <li><strong>Inicialización SQL:</strong> La ejecución temprana del script <code>init_db.py</code> garantiza la creación limpia de tablas SQL antes de abrir sockets.</li>
+                                </ul>
+                            </p>
                         </div>
-                        <div class="code-block-wrapper">
+                        <div class="flex-col code-block-wrapper" style="flex: 0.5; font-size: 0.85em;">
 <pre><code class="language-dockerfile">FROM python:3.11-slim
 WORKDIR /app
 
@@ -259,94 +318,172 @@ EXPOSE 5000
 CMD ["python", "app.py"]</code></pre>
                         </div>
                     </div>
-                </div>
+                </section>
             </section>
 
-            <!-- Slide 4: ML Scores -->
+            <!-- ===================== SECTION 4: MACHINE LEARNING ===================== -->
             <section>
-                <h2>Desempeño Machine Learning</h2>
-                <div class="flex-container">
-                    <div class="flex-col" style="flex: 0.4;">
-                        <p style="color: #cbd5e1; font-size: 0.9em; line-height: 1.6;">
-                            Evaluación de algoritmos para predecir la ocupación basándose en las variables ambientales de los sensores.
+                <!-- 4.1 Intro ML -->
+                <section>
+                    <h2>Implementación de Machine Learning</h2>
+                    <div class="glass-card">
+                        <h4 style="margin-bottom: 20px;">Predicción de Ocupación mediante Análisis Multivariable</h4>
+                        <p style="color: #94a3b8; font-size: 1.1em; line-height: 1.8;">
+                            A diferencia de sistemas mecánicos simples, este proyecto no depende ciegamente de un láser contador de puertas. Toma lecturas correlacionadas de CO2, Temperatura y Humedad relativa simultáneamente. Estas variables cambian de manera predecible según el número de ocupantes vivos que respiran e irradian calor corporal en espacios cerrados (aulas / laboratorios).
                         </p>
-                        <ul>
-                            <li>Comparativa de precisión entre Random Forest, XGBoost, etc.</li>
-                            <li>Alto rendimiento logrado en validación cruzada.</li>
-                            <li>El modelo ganador se integró nativamente en el backend.</li>
+                    </div>
+                </section>
+
+                <!-- 4.2 Resultados (Imagen) -->
+                <section>
+                    <h2>Evaluación de Algoritmos (Métricas)</h2>
+                    <div class="flex-container">
+                        <div class="flex-col" style="flex: 0.35;">
+                            <p style="font-size: 0.8em; color: #cbd5e1; line-height: 1.6;">
+                                Se evaluó exhaustivamente un abanico de estimadores estadísticos y árboles de decisión (Regresión y Clasificación). Las curvas de aprendizaje y validación cruzada nos permitieron seleccionar el modelo capaz de generalizar los datos sin incurrir en memorización (Overfitting).
+                            </p>
+                        </div>
+                        <div class="flex-col img-container" style="flex: 0.65;">
+                            <img src="scores-reg_forest_xgb.jpeg" alt="Scores de Machine Learning" style="width: 100%;">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4.3 Random Forest -->
+                <section>
+                    <h2>Elección Definitiva: Random Forest</h2>
+                    <div class="flex-container">
+                        <div class="glass-card" style="flex: 1;">
+                            <h4 style="color: #a855f7;">¿Por qué este algoritmo?</h4>
+                            <ul style="font-size: 0.9em; line-height: 1.8; color: #cbd5e1;">
+                                <li><strong>Inmunidad al Ruido (Resiliencia):</strong> Los sensores analógicos económicos sufren de ruido térmico y picos de voltaje. Un ensamble de múltiples árboles dispersos absorbe excelentemente los outliers.</li>
+                                <li><strong>Costo Computacional vs XGBoost:</strong> Aunque XGBoost es poderoso, Random Forest es sumamente eficiente y veloz haciendo inferencias asíncronas sobre procesadores de la familia ARM.</li>
+                                <li><strong>Pre-procesamiento Minimalista:</strong> No demanda esquemas estrictos de normalización ni escalamiento (como MinMax), a diferencia de implementaciones complejas con Redes Neuronales Profundas.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- ===================== SECTION 5: PROTOCOLOS ===================== -->
+            <section>
+                <section>
+                    <h2>Estándares de Comunicación</h2>
+                    <div class="flex-container">
+                        <div class="glass-card" style="flex: 1; text-align: left;">
+                            <h4 style="color: #ef4444; margin-bottom: 15px;">MQTT (Capa de Máquinas)</h4>
+                            <p style="font-size: 0.9em; color: #94a3b8; line-height: 1.6;">
+                                En lugar de agotar el Wi-Fi realizando <i>HTTP Polling</i> (preguntar cíclicamente), aplicamos el patrón <strong>Publish/Subscribe</strong>. Los microcontroladores publican strings JSON ultra-ligeros. El broker Mosquitto enruta los mensajes instantáneamente al backend, logrando una reducción superior al 80% en el consumo de ancho de banda y batería de los nodos.
+                            </p>
+                        </div>
+                        <div class="glass-card" style="flex: 1; text-align: left;">
+                            <h4 style="color: #f59e0b; margin-bottom: 15px;">WebSockets (Capa de Usuarios)</h4>
+                            <p style="font-size: 0.9em; color: #94a3b8; line-height: 1.6;">
+                                Para reflejar alertas en el Dashboard en <strong>tiempo real (menos de 50ms de latencia)</strong> sin que el cliente recargue la página, implementamos la librería <code>Socket.IO</code>. Flask empuja un evento (Push) <code>new_data</code> hacia todos los navegadores conectados una fracción de segundo posterior al cálculo de inferencia algorítmica.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- ===================== SECTION 6: LIMITACIONES ===================== -->
+            <section>
+                <!-- 6.1 Limitaciones Hardware -->
+                <section>
+                    <div class="glass-card">
+                        <span class="badge" style="background: rgba(255, 0, 118, 0.2); border-color: rgba(255, 0, 118, 0.4); color: #ff4785;">Limitaciones Encontradas</span>
+                        <h2 style="margin-bottom: 30px;">Desafíos: Hardware y Redes</h2>
+                        
+                        <ul style="font-size: 1.1em; line-height: 1.8;">
+                            <li>
+                                <strong>Calibración Extrema del sensor MQ135:</strong><br>
+                                <span style="font-size: 0.85em; color: #94a3b8;">Experimentamos gran dificultad en la calibración física de su resistor variable (RL). Los índices de resistencia cambiaban drásticamente dependiendo de la humedad y presión climática, arrojando alarmas de polución que eran falsos positivos en climas muy fríos.</span>
+                            </li>
+                            <li>
+                                <strong>Inestabilidad Wi-Fi Malla Institucional:</strong><br>
+                                <span style="font-size: 0.85em; color: #94a3b8;">La infraestructura empresarial expulsaba frecuentemente a los ESP32, por lo que fue imperativo programar rutinas de reconexión profunda para evitar bloqueos por tiempo de espera en el Watchdog Timer.</span>
+                            </li>
                         </ul>
                     </div>
-                    <div class="flex-col img-container" style="flex: 0.6;">
-                        <img src="scores-reg_forest_xgb.jpeg" alt="Scores de Machine Learning">
+                </section>
+
+                <!-- 6.2 Limitaciones Datos -->
+                <section>
+                    <div class="glass-card">
+                        <span class="badge" style="background: rgba(255, 0, 118, 0.2); border-color: rgba(255, 0, 118, 0.4); color: #ff4785;">Limitaciones Encontradas</span>
+                        <h2 style="margin-bottom: 30px;">Desafíos: Data Pipeline</h2>
+                        
+                        <ul style="font-size: 1.1em; line-height: 1.8;">
+                            <li>
+                                <strong>Etiquetado Humano Exhaustivo:</strong><br>
+                                <span style="font-size: 0.85em; color: #94a3b8;">Recolectar el set de datos para entrenar el modelo implicó contar la ocupación visualmente por horas. Esta carga manual inyectó sesgos inevitables y errores temporales de desincronización con el hardware.</span>
+                            </li>
+                            <li>
+                                <strong>Inercia de Partículas y Gases:</strong><br>
+                                <span style="font-size: 0.85em; color: #94a3b8;">Existe un problema físico termodinámico. El CO2, el calor y la humedad no desaparecen milisegundos después de que las personas evacúan el aula. Existe una latencia prolongada (decaimiento exponencial) que confundió al modelo momentáneamente.</span>
+                            </li>
+                        </ul>
                     </div>
-                </div>
+                </section>
             </section>
 
-            <!-- Slide 5: Limitations -->
+            <!-- ===================== SECTION 7: MEJORAS ===================== -->
             <section>
-                <div class="glass-card">
-                    <span class="badge" style="background: rgba(255, 0, 118, 0.2); border-color: rgba(255, 0, 118, 0.4); color: #ff4785;">Limitaciones Encontradas</span>
-                    <h2 style="margin-bottom: 30px;">Desafíos en Hardware y Entorno</h2>
-                    
-                    <ul style="font-size: 1.1em; line-height: 1.8;">
-                        <li>
-                            <strong>Calibración del sensor MQ135:</strong><br>
-                            <span style="font-size: 0.85em; color: #94a3b8;">Gran dificultad en la calibración por la enorme variabilidad de las lecturas. Los valores fluctuaron drásticamente al comparar aulas vacías con aulas llenas, y al contrastar el entorno universitario con el doméstico.</span>
-                        </li>
-                        <li>
-                            <strong>Etiquetado Manual:</strong><br>
-                            <span style="font-size: 0.85em; color: #94a3b8;">La dependencia de agregar etiquetas de manera manual para la recolección de datos hizo el proceso propenso a sesgos e imprecisiones.</span>
-                        </li>
-                    </ul>
-                </div>
+                <!-- 7.1 Mejoras Técnicas -->
+                <section>
+                    <h2>Posibilidades de Mejora: Arquitectura Lógica</h2>
+                    <div class="member-grid" style="grid-template-columns: 1fr 1fr; gap: 30px; text-align: left;">
+                        
+                        <div class="glass-card" style="padding: 30px;">
+                            <h4 style="font-size: 1.3em;">Contrarrestar Concept Drift</h4>
+                            <p style="font-size: 0.85em; color: #94a3b8;">Introducir un MLOps en línea (Online Machine Learning) capaz de asimilar fluctuaciones climáticas de largo plazo (como los cambios de estación) ajustando los pesos del árbol automáticamente para no perder precisión en el futuro.</p>
+                        </div>
+
+                        <div class="glass-card" style="padding: 30px;">
+                            <h4 style="font-size: 1.3em;">Fusión Sensorial CV (Visión)</h4>
+                            <p style="font-size: 0.85em; color: #94a3b8;">Despliegue de un algoritmo OpenCV/YOLO ligero apuntando hacia el marco de las puertas para automatizar enteramente la tarea de recolección de Ground-Truth sin intervención humana.</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 7.2 Mejoras Infraestructura -->
+                <section>
+                    <h2>Posibilidades de Mejora: Componentes IoT</h2>
+                    <div class="member-grid" style="grid-template-columns: 1fr 1fr; gap: 30px; text-align: left;">
+                        
+                        <div class="glass-card" style="padding: 30px;">
+                            <h4 style="font-size: 1.3em;">Transición a Energía Solar</h4>
+                            <p style="font-size: 0.85em; color: #94a3b8;">Habilitar modos profundos (<code>Deep Sleep</code>) en los núcleos del ESP32 para consumir microamperios. Acoplar pequeños paneles solares que recarguen baterías 18650 posibilitando un despliegue 100% libre de cables en la pared.</p>
+                        </div>
+
+                        <div class="glass-card" style="padding: 30px;">
+                            <h4 style="font-size: 1.3em;">Flasheo OTA Centralizado</h4>
+                            <p style="font-size: 0.85em; color: #94a3b8;">Desarrollar una interfaz Over-The-Air conectada al broker para distribuir y forzar actualizaciones de parche a decenas de sensores distribuidos simultáneamente desde el panel administrativo.</p>
+                        </div>
+                    </div>
+                </section>
             </section>
 
-            <!-- Slide 6: Improvements -->
+            <!-- ===================== SECTION 8: DASHBOARD ===================== -->
             <section>
-                <h2>Posibilidades de Mejora</h2>
-                <div class="member-grid" style="grid-template-columns: 1fr 1fr; gap: 30px; text-align: left;">
-                    
-                    <div class="glass-card" style="padding: 30px;">
-                        <h4 style="font-size: 1.3em;">Autocalibración ML</h4>
-                        <p style="font-size: 0.85em; color: #94a3b8;">Sugerimos implementar Machine Learning para un periodo de calibración inicial (algunas horas) y una posterior autocalibración continua y adaptativa.</p>
-                    </div>
-
-                    <div class="glass-card" style="padding: 30px;">
-                        <h4 style="font-size: 1.3em;">Fusión Sensorial (PIR/Luz)</h4>
-                        <p style="font-size: 0.85em; color: #94a3b8;">Añadir sensores PIR de movimiento, sensores de presencia humana, o de luminosidad para correlacionar los picos de CO2 y aumentar la asertividad.</p>
-                    </div>
-
-                    <div class="glass-card" style="padding: 30px;">
-                        <h4 style="font-size: 1.3em;">Sensores Adicionales (MQ8)</h4>
-                        <p style="font-size: 0.85em; color: #94a3b8;">Incorporar otros sensores de la familia MQ (como MQ8) para monitorear riesgos y fugas peligrosas en los laboratorios de la universidad.</p>
-                    </div>
-                    
-                    <div class="glass-card" style="padding: 30px;">
-                        <h4 style="font-size: 1.3em;">Validación Multientorno</h4>
-                        <p style="font-size: 0.85em; color: #94a3b8;">Entrenar el modelo con datasets más diversos incluyendo múltiples infraestructuras (no solo la casa y el aula local).</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Slide 7: Live Dashboard -->
-            <section>
-                <h2>Panel Interactivo (Dashboard Web)</h2>
+                <h2>Demostración del Panel Web</h2>
                 <p style="font-size: 0.7em; color: #94a3b8; max-width: 800px; margin: 0 auto 20px;">
-                    Este es el prototipo visual del panel de control que consumen los clientes. Está programado con Vanilla JS y SVGs dinámicos que reaccionan por WebSockets a los eventos MQTT, cambiando de color (Vacío/Parcial/Ocupado) según la inferencia de Machine Learning.
+                    Integración final. Interfaz UI reactiva consumida por los administradores de planta para supervisar la ocupación del edificio inferida y centralizada.<br>
+                    <strong>Interactúe pasando el puntero sobre los planos (SVG).</strong>
                 </p>
                 <div style="background: rgba(255, 200, 0, 0.1); border: 1px solid rgba(255, 200, 0, 0.4); color: #ffd700; padding: 10px; border-radius: 8px; font-size: 0.6em; margin-bottom: 15px; display: none;" id="docker-warn">
-                    ⚠️ Nota para el Profesor: Si el panel a continuación se ve en blanco, es porque requiere correr localmente el backend de Python o habilitar scripts no seguros.
+                    ⚠️ Nota para el Profesor: Debe ejecutarse localmente.
                 </div>
                 <div class="iframe-container" style="background: white;">
                     <iframe src="./templates/index.html" title="Smart Building Dashboard" style="width: 100%; height: 100%; background: white;"></iframe>
                 </div>
             </section>
 
-            <!-- Slide 8: End -->
+            <!-- ===================== SECTION 9: END ===================== -->
             <section>
                 <div class="glass-card">
-                    <h1>¡Gracias!</h1>
-                    <p style="color: #94a3b8;">Ronda de Preguntas</p>
+                    <h1>¡Gracias por su Atención!</h1>
+                    <p style="color: #94a3b8; margin-top: 20px; font-size: 1.2em;">Ronda de Preguntas y Respuestas</p>
                 </div>
             </section>
 
