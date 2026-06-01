@@ -80,7 +80,7 @@
             border-radius: 16px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             border: 1px solid rgba(255,255,255,0.1);
-            max-height: 550px;
+            max-height: 450px;
             object-fit: cover;
         }
 
@@ -141,7 +141,7 @@
 
         .iframe-container {
             width: 100%;
-            height: 500px;
+            height: 450px;
             border-radius: 20px;
             overflow: hidden;
             border: 2px solid var(--glass-border);
@@ -337,6 +337,9 @@ CMD ["python", "app.py"]</code></pre>
             <section>
                 <h2>Dashboard en Vivo</h2>
                 <p style="font-size: 0.8em; color: #94a3b8;">Interfaz alojada en el contenedor Web local</p>
+                <div style="background: rgba(255, 200, 0, 0.1); border: 1px solid rgba(255, 200, 0, 0.4); color: #ffd700; padding: 10px; border-radius: 8px; font-size: 0.6em; margin-bottom: 15px;">
+                    ⚠️ Nota: Para que el iframe cargue, debes tener <code>docker-compose up</code> ejecutándose. <br>Si accedes por HTTPS (como ngrok o GitHub Pages), el navegador puede bloquear <code>localhost</code> por seguridad (Mixed Content). Abre la presentación localmente para verlo.
+                </div>
                 <div class="iframe-container">
                     <iframe src="http://localhost:5001" title="Smart Building Dashboard"></iframe>
                 </div>
@@ -363,9 +366,9 @@ CMD ["python", "app.py"]</code></pre>
             plugins: [ RevealHighlight ],
             slideNumber: true,
             autoAnimate: true,
-            width: 1280,
-            height: 720,
-            margin: 0.1,
+            width: 1024,
+            height: 768,
+            margin: 0.04,
             minScale: 0.2,
             maxScale: 2.0
         });
