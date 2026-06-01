@@ -197,14 +197,14 @@
                 <!-- 2.1 Overview -->
                 <section>
                     <h2>Arquitectura del Sistema</h2>
-                    <p style="color: #94a3b8; margin-bottom: 30px;">Una topología Edge-to-Cloud diseñada para baja latencia.</p>
+                    <p style="color: #94a3b8; margin-bottom: 30px;">Una topología Edge-to-Cloud distribuida con concurrencia asíncrona.</p>
                     <div class="flex-container">
                         <div class="flex-col" style="flex: 0.45;">
                             <ul style="font-size: 0.85em; line-height: 1.6;">
-                                <li><strong>Sensado en el Edge:</strong> ESP32 como nodos de recolección de datos ambientales.</li>
-                                <li><strong>Procesamiento Local:</strong> Una Raspberry Pi 5 actúa como Gateway y Broker.</li>
-                                <li><strong>Inteligencia Distribuida:</strong> Inferencias de Machine Learning ejecutadas in-situ.</li>
-                                <li><strong>Disponibilidad:</strong> Redes privadas empresariales (Tailscale) y exposición controlada (ngrok/Vercel).</li>
+                                <li><strong>Edge Computing:</strong> Microcontroladores operando como nodos de lectura y publicación (Publishers).</li>
+                                <li><strong>Gateway & Broker:</strong> Raspberry Pi 5 actuando como hub de enrutamiento MQTT local (Mosquitto).</li>
+                                <li><strong>Backend Híbrido:</strong> Servidor Flask ejecutando hilos paralelos (Eventlet) para ML en tiempo real.</li>
+                                <li><strong>Zero-Trust Network:</strong> Acceso segmentado mediante Tailscale (UDP Hole Punching) para eludir NAT institucionales.</li>
                             </ul>
                         </div>
                         <div class="flex-col img-container" style="flex: 0.55;">
@@ -215,108 +215,102 @@
                 
                 <!-- 2.2 Nodos ESP32 -->
                 <section>
-                    <h2>Malla de Nodos ESP32</h2>
-                    <div class="glass-card">
-                        <h4 style="margin-bottom: 20px;">Hardware y Sensores</h4>
-                        <ul style="font-size: 1.1em; line-height: 1.8;">
-                            <li><strong>Microcontrolador:</strong> ESP32 NodeMCU, elegido por su conectividad Wi-Fi nativa bidireccional.</li>
-                            <li><strong>Módulo de Gases (MQ135):</strong> Detecta CO2, Amoniaco, Benceno y alcohol, vitales para determinar la calidad del aire de las aulas.</li>
-                            <li><strong>Sensores Atmosféricos:</strong> Medición en tiempo real de Temperatura, Humedad y Presión barométrica.</li>
-                            <li><strong>Comunicación:</strong> Publicación asíncrona hacia el servidor MQTT sin bloquear el ciclo de medición físico.</li>
-                        </ul>
+                    <h2>Complejidad en el Edge (ESP32)</h2>
+                    <div class="flex-container">
+                        <div class="flex-col" style="flex: 0.5;">
+                            <p style="font-size: 0.8em; color: #cbd5e1; line-height: 1.6;">
+                                Implementación en C++ enfocada en alta disponibilidad y bajo bloqueo (Non-blocking I/O).
+                            </p>
+                            <ul style="font-size: 0.8em; line-height: 1.6;">
+                                <li><strong>Hardware Exacto:</strong> Sensores analógicos MQ135 y MQ8 procesados mediante ADCs de 12-bits.</li>
+                                <li><strong>Filtro Matemático:</strong> Se calculan <code>deltas</code> base tras 100 muestras de calibración inicial.</li>
+                                <li><strong>JSON Parsing:</strong> Uso de <code>ArduinoJson</code> para empacar los datos estructurados dinámicamente antes de enviar.</li>
+                            </ul>
+                        </div>
+                        <div class="flex-col code-block-wrapper" style="flex: 0.5; font-size: 0.7em;">
+<pre><code class="language-cpp">// Loop No-Bloqueante (sin delay) con JSON
+unsigned long tiempoActual = millis();
+if (tiempoActual - tiempoAnterior >= 2000) {
+  float mq135_delta = analogRead(MQ135_PIN) - base_135;
+  float mq8_delta = analogRead(MQ8_PIN) - base_8;
+  float co2_index = (mq135_delta*0.9) + (mq8_delta*0.1);
+
+  StaticJsonDocument&lt;200&gt; doc;
+  doc["mq135"] = mq135_raw;
+  doc["co2_index"] = max(0.0, co2_index);
+  
+  String payload;
+  serializeJson(doc, payload);
+  mqttClient.publish("salon/LAB1/gases", payload.c_str());
+}</code></pre>
+                        </div>
                     </div>
                 </section>
 
                 <!-- 2.3 Seguridad y Acceso Remoto -->
                 <section>
-                    <h2>Gestión de Red y Seguridad</h2>
+                    <h2>Arquitectura de Acceso Seguro</h2>
                     <div class="flex-container">
                         <div class="glass-card" style="flex: 1;">
-                            <h4 style="color: #10B981;">Acceso Seguro (Tailscale)</h4>
-                            <p style="font-size: 0.9em; color: #94a3b8;">Implementamos una VPN de malla (WireGuard) para que los administradores y profesores puedan acceder al sistema como si estuvieran en la red local de la universidad, garantizando encriptación de extremo a extremo y evitando vulnerabilidades de puertos abiertos.</p>
+                            <h4 style="color: #10B981;">Red Empresarial (Tailscale VPN)</h4>
+                            <p style="font-size: 0.9em; color: #94a3b8;">La Raspberry Pi 5 opera dentro de la intranet de la Universidad. Para lograr acceso global sin abrir puertos físicos en el router universitario, desplegamos Tailscale (basado en WireGuard). Esto crea un túnel NAT encriptado Peer-to-Peer exclusivo para desarrolladores y el Profesor.</p>
                         </div>
                         <div class="glass-card" style="flex: 1;">
-                            <h4 style="color: #3b82f6;">Acceso Invitado (Ngrok/Vercel)</h4>
-                            <p style="font-size: 0.9em; color: #94a3b8;">Para estudiantes o personal externo que requiera ver el estado de ocupación, el frontend del dashboard se expone temporalmente mediante túneles inversos o deploys estáticos web, aislando y protegiendo la base de datos principal de accesos no autorizados.</p>
+                            <h4 style="color: #3b82f6;">Proxy Público Inverso</h4>
+                            <p style="font-size: 0.9em; color: #94a3b8;">Dado que el cliente final (estudiantes) no debe instalar VPNs, el puerto 5001 del Dashboard se expone mediante túneles inversos (Ngrok) o despliegues serverless (Vercel). Esto mitiga el riesgo de ataques DDoS directos hacia el hardware del proyecto.</p>
                         </div>
                     </div>
                 </section>
             </section>
 
-            <!-- ===================== SECTION 3: DOCKER ===================== -->
+            <!-- ===================== SECTION 3: BACKEND Y DOCKER ===================== -->
             <section>
-                <!-- 3.1 Introduccion a Docker -->
+                <!-- 3.1 Backend Flask Asincrono -->
                 <section>
-                    <h2>Despliegue con Docker (QEMU)</h2>
+                    <h2>Backend de Alta Concurrencia (Python)</h2>
+                    <div class="flex-container">
+                        <div class="flex-col" style="flex: 0.5;">
+                            <p style="font-size: 0.8em; color: #cbd5e1; line-height: 1.6;">
+                                Superamos la limitación del GIL de Python (Global Interpreter Lock) usando subprocesos asíncronos.
+                                <ul>
+                                    <li><strong>Eventlet Monkey-Patching:</strong> Permite que Flask gestione miles de conexiones WebSocket concurrentes.</li>
+                                    <li><strong>Daemon Threads:</strong> El loop del cliente MQTT (<code>mqtt_client.loop</code>) se ejecuta en un <code>background_task</code> aislado para no congelar el servidor web.</li>
+                                    <li><strong>Wildcards MQTT:</strong> Suscripción dinámica a <code>salon/+/gases</code> en un solo socket.</li>
+                                </ul>
+                            </p>
+                        </div>
+                        <div class="flex-col code-block-wrapper" style="flex: 0.5; font-size: 0.7em;">
+<pre><code class="language-python">import eventlet
+eventlet.monkey_patch() # Habilita concurrencia real
+
+def handle_mqtt_message(msg):
+    payload = json.loads(msg.payload.decode())
+    # ... inferencia ML en vivo ...
+    socketio.emit("new_data", { "lab": lab_name, ... })
+
+def run_mqtt():
+    mqtt_client.subscribe("salon/+/gases") # Wildcard topic
+    while True:
+        mqtt_client.loop(timeout=1.0)
+        socketio.sleep(0.1) # Cede el hilo al framework web
+
+if __name__ == "__main__":
+    socketio.start_background_task(target=run_mqtt)
+    socketio.run(app, host="0.0.0.0", port=5000)</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3.2 Introduccion a Docker -->
+                <section>
+                    <h2>Virtualización ARM en Edge (QEMU)</h2>
                     <div class="glass-card">
-                        <h4 style="margin-bottom: 20px;">¿Por qué virtualizar en la Raspberry Pi 5?</h4>
+                        <h4 style="margin-bottom: 20px;">Abstracción sobre Raspberry Pi 5</h4>
                         <ul style="font-size: 1.1em; line-height: 1.8;">
-                            <li><strong>Entorno Aislado:</strong> Evita conflictos irreversibles de dependencias entre las librerías científicas de Python, Scikit-Learn y los paquetes nativos del SO base (Debian/Raspbian).</li>
-                            <li><strong>Portabilidad Absoluta:</strong> El código corre exactamente igual en las computadoras Windows de los desarrolladores y en el hardware Linux final del laboratorio.</li>
-                            <li><strong>Emulación Cruzada (QEMU):</strong> Permite construir imágenes ARM64 en computadoras de arquitectura x86_64, facilitando enormemente la distribución.</li>
+                            <li><strong>Entorno Inmutable:</strong> Evita el infierno de dependencias de C++ para compilar Scikit-Learn directamente en Debian/Raspbian ARM64.</li>
+                            <li><strong>Emulación Cruzada (BuildX):</strong> Permite empaquetar binarios nativos ARM desde los portátiles x86 de los desarrolladores.</li>
+                            <li><strong>Orquestación Compose:</strong> Un archivo unifica el ciclo de vida del broker C puro (Eclipse Mosquitto) junto con el contenedor Python de Flask.</li>
                         </ul>
-                    </div>
-                </section>
-
-                <!-- 3.2 Docker Compose -->
-                <section>
-                    <h2>Orquestación: docker-compose.yml</h2>
-                    <div class="flex-container">
-                        <div class="flex-col" style="flex: 0.5;">
-                            <p style="font-size: 0.8em; color: #cbd5e1; line-height: 1.6;">
-                                Múltiples contenedores interactúan bajo una red virtual de puente (bridge local). 
-                                <ul>
-                                    <li><code>mqtt</code>: Usa la imagen oficial <code>eclipse-mosquitto:latest</code>. Responsable de la ingesta en el puerto 1883.</li>
-                                    <li><code>web</code>: El core de procesamiento en Flask.</li>
-                                    <li><strong>Persistencia de Datos:</strong> Se utilizan volúmenes mapeados (<code>edge-data</code>) para garantizar que la base de datos SQLite retenga su histórico frente a caídas eléctricas o reinicios de contenedor.</li>
-                                </ul>
-                            </p>
-                        </div>
-                        <div class="flex-col code-block-wrapper" style="flex: 0.5; font-size: 0.85em;">
-<pre><code class="language-yaml">services:
-  mqtt:
-    image: eclipse-mosquitto:latest
-    ports:
-      - "1883:1883"
-  web:
-    build: .
-    ports:
-      - "5001:5000"
-    environment:
-      - MQTT_BROKER=mqtt
-      - DB_PATH=/app/data/building.db</code></pre>
-                        </div>
-                    </div>
-                </section>
-                
-                <!-- 3.3 Dockerfile -->
-                <section>
-                    <h2>Empaquetado: Dockerfile</h2>
-                    <div class="flex-container">
-                        <div class="flex-col" style="flex: 0.5;">
-                            <p style="font-size: 0.8em; color: #cbd5e1; line-height: 1.6;">
-                                Receta inmutable para la construcción de la imagen base.
-                                <ul>
-                                    <li><strong>SO Base Ligero:</strong> <code>python:3.11-slim</code> reduce drásticamente el peso de la imagen y la superficie de ataque, optimizado para recursos limitados.</li>
-                                    <li><strong>Inyección del Modelo:</strong> El modelo serializado <code>occupancy_model.pkl</code> se pre-empaqueta en la imagen.</li>
-                                    <li><strong>Inicialización SQL:</strong> La ejecución temprana del script <code>init_db.py</code> garantiza la creación limpia de tablas SQL antes de abrir sockets.</li>
-                                </ul>
-                            </p>
-                        </div>
-                        <div class="flex-col code-block-wrapper" style="flex: 0.5; font-size: 0.85em;">
-<pre><code class="language-dockerfile">FROM python:3.11-slim
-WORKDIR /app
-
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-
-RUN mkdir -p /app/data
-RUN python init_db.py /app/data/building.db
-
-EXPOSE 5000
-CMD ["python", "app.py"]</code></pre>
-                        </div>
                     </div>
                 </section>
             </section>
@@ -325,11 +319,11 @@ CMD ["python", "app.py"]</code></pre>
             <section>
                 <!-- 4.1 Intro ML -->
                 <section>
-                    <h2>Implementación de Machine Learning</h2>
+                    <h2>Inteligencia Distribuida (Pipeline)</h2>
                     <div class="glass-card">
-                        <h4 style="margin-bottom: 20px;">Predicción de Ocupación mediante Análisis Multivariable</h4>
+                        <h4 style="margin-bottom: 20px;">Inferencia en Streaming</h4>
                         <p style="color: #94a3b8; font-size: 1.1em; line-height: 1.8;">
-                            A diferencia de sistemas mecánicos simples, este proyecto no depende ciegamente de un láser contador de puertas. Toma lecturas correlacionadas de CO2, Temperatura y Humedad relativa simultáneamente. Estas variables cambian de manera predecible según el número de ocupantes vivos que respiran e irradian calor corporal en espacios cerrados (aulas / laboratorios).
+                            El sistema procesa inferencias continuas en el callback MQTT, no en lotes (Batch). En milisegundos, el vector de variables <code>[MQ135, MQ8, CO2_Index]</code> se inyecta en la función <code>predict_occupancy()</code> de Scikit-Learn que retorna el estado exacto (VACÍO, PARCIAL, OCUPADO) antes de insertarse en SQLite.
                         </p>
                     </div>
                 </section>
@@ -358,7 +352,7 @@ CMD ["python", "app.py"]</code></pre>
                             <ul style="font-size: 0.9em; line-height: 1.8; color: #cbd5e1;">
                                 <li><strong>Inmunidad al Ruido (Resiliencia):</strong> Los sensores analógicos económicos sufren de ruido térmico y picos de voltaje. Un ensamble de múltiples árboles dispersos absorbe excelentemente los outliers.</li>
                                 <li><strong>Costo Computacional vs XGBoost:</strong> Aunque XGBoost es poderoso, Random Forest es sumamente eficiente y veloz haciendo inferencias asíncronas sobre procesadores de la familia ARM.</li>
-                                <li><strong>Pre-procesamiento Minimalista:</strong> No demanda esquemas estrictos de normalización ni escalamiento (como MinMax), a diferencia de implementaciones complejas con Redes Neuronales Profundas.</li>
+                                <li><strong>Pre-procesamiento Estático:</strong> No requiere costosas capas de escalamiento tensorial, ahorrando valiosos ciclos de CPU en la Raspberry Pi 5.</li>
                             </ul>
                         </div>
                     </div>
