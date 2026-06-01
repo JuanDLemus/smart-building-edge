@@ -43,7 +43,7 @@
             margin-bottom: 20px;
         }
 
-        .reveal h1 { font-size: 3.5em; }
+        .reveal h1 { font-size: 3em; }
         .reveal h2 { font-size: 2.5em; }
 
         .glass-card {
@@ -177,8 +177,7 @@
             <!-- Slide 1: Title & Members -->
             <section>
                 <div class="glass-card">
-                    <span class="badge">Proyecto Final</span>
-                    <h1>Smart Building<br>Edge IoT</h1>
+                    <h1>Smart Building Edge IoT</h1>
                     <p style="color: #94a3b8; font-size: 1.1em; margin-bottom: 40px;">Sistema de Monitoreo Inteligente y Predicción de Ocupación</p>
                     
                     <div style="text-align: left; margin-top: 30px;">
@@ -341,7 +340,7 @@ CMD ["python", "app.py"]</code></pre>
                     ⚠️ Nota: Para que el iframe cargue, debes tener <code>docker-compose up</code> ejecutándose. <br>Si accedes por HTTPS (como ngrok o GitHub Pages), el navegador puede bloquear <code>localhost</code> por seguridad (Mixed Content). Abre la presentación localmente para verlo.
                 </div>
                 <div class="iframe-container">
-                    <iframe src="http://localhost:5001" title="Smart Building Dashboard"></iframe>
+                    <iframe src="templates/index.html" title="Smart Building Dashboard"></iframe>
                 </div>
             </section>
 
@@ -366,8 +365,8 @@ CMD ["python", "app.py"]</code></pre>
             plugins: [ RevealHighlight ],
             slideNumber: true,
             autoAnimate: true,
-            width: 1024,
-            height: 768,
+            width: 1920,
+            height: 1080,
             margin: 0.04,
             minScale: 0.2,
             maxScale: 2.0
