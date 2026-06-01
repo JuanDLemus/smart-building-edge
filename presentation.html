@@ -196,16 +196,15 @@
             <section>
                 <h2>Arquitectura del Sistema</h2>
                 <div class="flex-container">
-                    <div class="flex-col" style="flex: 0.4;">
-                        <ul>
-                            <li><strong>Edge Devices:</strong> Nodos que publican datos de sensores vía red inalámbrica.</li>
-                            <li><strong>MQTT Broker:</strong> Middleware de mensajería ligero.</li>
-                            <li><strong>Backend Flask:</strong> Suscrito a los tópicos, procesa y almacena datos.</li>
-                            <li><strong>Machine Learning:</strong> Modelo pre-entrenado clasifica la ocupación en tiempo real.</li>
-                            <li><strong>Dashboard:</strong> Interfaz web para visualización.</li>
+                    <div class="flex-col" style="flex: 0.45;">
+                        <ul style="font-size: 0.85em; line-height: 1.6;">
+                            <li><strong>Malla de Nodos (Edge):</strong> Dispositivos ESP32 con sensores MQ135 (gases), temperatura, humedad y presión comunicándose vía Wi-Fi.</li>
+                            <li><strong>Nodo Central (Raspberry Pi 5):</strong> Ejecuta Docker QEMU con un Broker MQTT (Mosquitto) en el puerto 1883 para ingestar los datos de los nodos.</li>
+                            <li><strong>Procesamiento Inteligente:</strong> Un servidor Web que integra un modelo de Machine Learning (Random Forest) actualizable en el tiempo para clasificar la ocupación.</li>
+                            <li><strong>Acceso Remoto:</strong> Dividido en Acceso Seguro para la empresa (vía VPN Tailscale) y Acceso Invitado limitado expuesto temporalmente mediante ngrok/Vercel.</li>
                         </ul>
                     </div>
-                    <div class="flex-col img-container" style="flex: 0.6;">
+                    <div class="flex-col img-container" style="flex: 0.55;">
                         <img src="diagrama.png" alt="Diagrama de Arquitectura">
                     </div>
                 </div>
@@ -213,49 +212,46 @@
 
             <!-- Slide 3: Docker Deployment -->
             <section>
-                <h2>Despliegue con Docker</h2>
-                <p style="font-size: 0.8em; color: #94a3b8; margin-bottom: 30px;">Implementación mediante contenedores, reemplazando la Raspberry Pi física.</p>
+                <h2 style="margin-bottom: 5px;">Despliegue con Docker</h2>
+                <p style="font-size: 0.7em; color: #94a3b8; margin-bottom: 30px;">
+                    Se utilizó Docker para abstraer el entorno de la Raspberry Pi 5 y garantizar portabilidad sin fallos de dependencias.
+                </p>
                 
                 <div class="flex-container">
                     <div class="flex-col" style="flex: 1;">
-                        <span class="badge">docker-compose.yml</span>
+                        <div style="margin-bottom: 15px;">
+                            <span class="badge" style="margin-bottom: 5px;">docker-compose.yml</span>
+                            <p style="font-size: 0.65em; color: #cbd5e1; line-height: 1.4;">Orquesta dos servicios críticos en una red unificada: <strong>mqtt</strong> (Eclipse Mosquitto) y <strong>web</strong> (Backend Flask). Mapea el volumen <code>edge-data</code> para que la base de datos SQLite no se borre al reiniciar.</p>
+                        </div>
                         <div class="code-block-wrapper">
 <pre><code class="language-yaml">services:
   mqtt:
     image: eclipse-mosquitto:latest
-    container_name: smart-building-mqtt
     ports:
       - "1883:1883"
-    volumes:
-      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
-
   web:
     build: .
-    container_name: smart-building-web
     ports:
       - "5001:5000"
     environment:
       - MQTT_BROKER=mqtt
-      - DB_PATH=/app/data/building.db
-      - OCCUPANCY_MODEL_PATH=/app/occupancy_model.pkl</code></pre>
+      - DB_PATH=/app/data/building.db</code></pre>
                         </div>
                     </div>
                     
                     <div class="flex-col" style="flex: 1;">
-                        <span class="badge">Dockerfile</span>
+                        <div style="margin-bottom: 15px;">
+                            <span class="badge" style="margin-bottom: 5px;">Dockerfile</span>
+                            <p style="font-size: 0.65em; color: #cbd5e1; line-height: 1.4;">Usa una imagen ligera <code>python:3.11-slim</code>. Inyecta el modelo de ML local <code>occupancy_model.pkl</code>, instala los requerimientos e inicializa dinámicamente el esquema SQL de la base de datos antes de exponer el puerto 5000.</p>
+                        </div>
                         <div class="code-block-wrapper">
 <pre><code class="language-dockerfile">FROM python:3.11-slim
-
 WORKDIR /app
 
-# Install python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy application files
 COPY . .
 
-# Create data directory for persistent SQLite
 RUN mkdir -p /app/data
 RUN python init_db.py /app/data/building.db
 
@@ -334,13 +330,15 @@ CMD ["python", "app.py"]</code></pre>
 
             <!-- Slide 7: Live Dashboard -->
             <section>
-                <h2>Dashboard en Vivo</h2>
-                <p style="font-size: 0.8em; color: #94a3b8;">Interfaz alojada en el contenedor Web local</p>
-                <div style="background: rgba(255, 200, 0, 0.1); border: 1px solid rgba(255, 200, 0, 0.4); color: #ffd700; padding: 10px; border-radius: 8px; font-size: 0.6em; margin-bottom: 15px;">
-                    ⚠️ Nota: Para que el iframe cargue, debes tener <code>docker-compose up</code> ejecutándose. <br>Si accedes por HTTPS (como ngrok o GitHub Pages), el navegador puede bloquear <code>localhost</code> por seguridad (Mixed Content). Abre la presentación localmente para verlo.
+                <h2>Panel Interactivo (Dashboard Web)</h2>
+                <p style="font-size: 0.7em; color: #94a3b8; max-width: 800px; margin: 0 auto 20px;">
+                    Este es el prototipo visual del panel de control que consumen los clientes. Está programado con Vanilla JS y SVGs dinámicos que reaccionan por WebSockets a los eventos MQTT, cambiando de color (Vacío/Parcial/Ocupado) según la inferencia de Machine Learning.
+                </p>
+                <div style="background: rgba(255, 200, 0, 0.1); border: 1px solid rgba(255, 200, 0, 0.4); color: #ffd700; padding: 10px; border-radius: 8px; font-size: 0.6em; margin-bottom: 15px; display: none;" id="docker-warn">
+                    ⚠️ Nota para el Profesor: Si el panel a continuación se ve en blanco, es porque requiere correr localmente el backend de Python o habilitar scripts no seguros.
                 </div>
-                <div class="iframe-container">
-                    <iframe src="templates/index.html" title="Smart Building Dashboard"></iframe>
+                <div class="iframe-container" style="background: white;">
+                    <iframe src="./templates/index.html" title="Smart Building Dashboard" style="width: 100%; height: 100%; background: white;"></iframe>
                 </div>
             </section>
 
